@@ -8,15 +8,15 @@ Gem::Specification.new do |spec|
   spec.authors = ["100 Starlings"]
   spec.email = ["info@100starlings.com"]
 
-  spec.summary = "TODO: Write a short summary, because RubyGems requires one."
-  spec.homepage = "www.rubyblok.com"
+  spec.summary = "This is a brief"
+  spec.homepage = "http://www.rubyblok.com"
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["allowed_push_host"] = "https://rubyblok.com"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/100Starlings/rubyblok-website"
+  spec.metadata["changelog_uri"] = "https://github.com/100Starlings/rubyblok-website"
 
   spec.files = Dir.chdir(__dir__) do
     `git ls-files -z`.split("\x0").reject do |f|
