@@ -1,4 +1,4 @@
-require_relative '../lib/rubyblok/hello_world'
+require "spec_helper"
 
 describe Rubyblok::Hello do
   let(:rubyblok) { described_class.new }
