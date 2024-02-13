@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.metadata["allowed_push_host"] = "https://rubyblok.com"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/100Starlings/rubyblok-website"
-  spec.metadata["changelog_uri"] = "https://github.com/100Starlings/rubyblok-website"
+  spec.metadata["source_code_uri"] = "https://github.com/100Starlings/rubyblok"
+  spec.metadata["changelog_uri"] = "https://github.com/100Starlings/rubyblok"
 
   spec.files = Dir.chdir(__dir__) do
     `git ls-files -z`.split("\x0").reject do |f|
@@ -28,10 +28,6 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "rspec"
-  spec.add_dependency "rails"
-  spec.add_dependency "pg"
-  spec.add_dependency "dotenv-rails"
+  spec.add_dependency "rails", '>= 6.1', '< 8.0'
   spec.add_dependency "tailwindcss-rails"
-  spec.add_dependency "thor"
 end
