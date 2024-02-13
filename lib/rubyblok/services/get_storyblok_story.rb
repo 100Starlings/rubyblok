@@ -13,10 +13,16 @@ class GetStoryblokStory
 
   private
 
+<<<<<<< HEAD
   def storyblok_client(version: "draft")
     Storyblok::Client.new(
       token: Rubyblok.configuration.api_token,
       version: Rubyblok.configuration.version
+=======
+  def storyblok_client
+    Storyblok::Client.new(
+      token: Rubyblok.configuration.api_token
+>>>>>>> 5fdeda1 ([RB-133] Add specs and getstoryblokstory)
     )
   end
 
