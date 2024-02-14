@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "rubyblok/version"
-require_relative "rubyblok/hello_world"
 require_relative "rubyblok/configuration"
 require_relative "rubyblok/services/get_storyblok_story"
 
