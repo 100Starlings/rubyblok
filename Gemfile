@@ -13,4 +13,5 @@ group :development, :test do
   gem "rspec"
   gem "webmock"
   gem "storyblok"
+  gem "rubocop"
 end
