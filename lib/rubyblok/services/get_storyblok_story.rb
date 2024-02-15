@@ -16,7 +16,7 @@ class GetStoryblokStory
   def storyblok_client(version: "draft")
     Storyblok::Client.new(
       token: Rubyblok.configuration.api_token,
-      version: version
+      version: Rubyblok.configuration.version
     )
   end
 
