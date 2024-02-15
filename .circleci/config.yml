@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - slack/notify:
-          channel: C06K11FAQ48 
+          channel: $SLACK_DEFAULT_CHANNEL 
           event: always 
           ignore_errors: true 
 
