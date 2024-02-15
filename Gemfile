@@ -11,4 +11,6 @@ group :development, :test do
   gem "bundler"
   gem "pry"
   gem "rspec"
+  gem "webmock"
+  gem "storyblok"
 end
