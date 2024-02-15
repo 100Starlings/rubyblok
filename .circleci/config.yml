@@ -1,3 +1,6 @@
+orbs:
+  slack: circleci/slack@4.4.4
+
 version: 2.1
 
 jobs:
@@ -7,6 +10,10 @@ jobs:
 
     steps:
       - checkout
+      - slack/notify:
+          channel: C06K11FAQ48 
+          event: always 
+          ignore_errors: true 
 
       - run:
           name: Install dependencies
