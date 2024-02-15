@@ -28,7 +28,6 @@ jobs:
           channel: $SLACK_DEFAULT_CHANNEL
           event: always
           message: "Build finished: $CIRCLE_BUILD_URL"
-          webhook: $SLACK_WEBHOOK_URL
 
 workflows:
   version: 2
