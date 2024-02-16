@@ -9,12 +9,6 @@ jobs:
       - image: cimg/ruby:3.3.0
 
     steps:
-      - slack/notify:
-          channel: $SLACK_DEFAULT_CHANNEL
-          token: $SLACK_ACCESS_TOKEN
-          event: always
-          context: CircleCI
-
       - checkout
       - run:
           name: Install dependencies
@@ -29,6 +23,14 @@ jobs:
           name: RSpec
           command: |
             bundle exec rspec
+
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
 workflows:
   version: 2
