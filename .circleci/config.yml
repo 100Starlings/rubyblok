@@ -7,16 +7,8 @@ jobs:
   build:
     docker:
       - image: cimg/ruby:3.3.0
-
     steps:
       - checkout
-      - run: echo "Sending status"
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
       - run:
           name: Install dependencies
           command: |
@@ -30,7 +22,17 @@ jobs:
           name: RSpec
           command: |
             bundle exec rspec
-
+  status:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - run: echo "Sending status"
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 workflows:
   version: 2
   build:
