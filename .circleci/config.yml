@@ -1,13 +1,18 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.1
+  slack: circleci/slack@4.4.4
 
 jobs:
   build:
     docker:
       - image: cimg/ruby:3.3.0
+
     steps:
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: always
+
       - checkout
       - run:
           name: Install dependencies
@@ -22,22 +27,23 @@ jobs:
           name: RSpec
           command: |
             bundle exec rspec
-  status:
+
+  notify:
     docker:
-      - image: cimg/base:stable
+      - image: 'cimg/base:stable'
     steps:
-      - run: echo "Sending status"
       - slack/notify:
           event: fail
           template: basic_fail_1
       - slack/notify:
           event: pass
           template: success_tagged_deploy_1
+
 workflows:
   version: 2
   build:
     jobs:
+      - notify:
+          context: slack-secrets
       - build
-      - status:
-          requires:
-            - build
+      
