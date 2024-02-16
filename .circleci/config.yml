@@ -38,3 +38,6 @@ workflows:
   build:
     jobs:
       - build
+      - status:
+          requires:
+            - build
