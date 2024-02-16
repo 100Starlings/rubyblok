@@ -26,7 +26,13 @@ jobs:
           
       - slack/notify:
           channel: SLACK_DEFAULT_CHANNEL 
-          event: always 
+          event: fail
+          template: basic_fail_1
+
+      - slack/notify:
+          channel: SLACK_DEFAULT_CHANNEL 
+          event: pass
+          template: success_tagged_deploy_1
 
 workflows:
   version: 2
