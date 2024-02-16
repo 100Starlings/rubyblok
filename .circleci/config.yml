@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  slack: circleci/slack@4.1
+
 jobs:
   build:
     docker:
@@ -7,6 +10,13 @@ jobs:
 
     steps:
       - checkout
+      - run: echo "Sending status"
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
       - run:
           name: Install dependencies
           command: |
