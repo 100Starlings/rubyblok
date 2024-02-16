@@ -23,26 +23,15 @@ jobs:
           name: RSpec
           command: |
             bundle exec rspec
-
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
-
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
           
-  example-job:
-    docker:
-      # replace with your preferred image
-      - image: cimg/base:stable
-    steps:
-      - slack/notify
+      - slack/notify:
+          channel: SLACK_DEFAULT_CHANNEL 
+          event: always 
 
 workflows:
   version: 2
   build:
     jobs:
-      - build
-      - example-job
+      - build:
+          context: CircleCI
       
