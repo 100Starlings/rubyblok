@@ -30,14 +30,34 @@ jobs:
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANNEL 
           event: fail
-          template: basic_fail_1
-          mentions: <@SLACK_USER_ID>
-
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Deployment failed in branch *$BRANCH_NAME* triggered by *$USER_NAME*"
+                  }
+                }
+              ]
+            }
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANNEL 
           event: pass
-          template: success_tagged_deploy_1
-          mentions: <@SLACK_USER_ID>
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Deployment successful in branch *$BRANCH_NAME* triggered by *$USER_NAME*"
+                  }
+                }
+              ]
+            }
+
 
 workflows:
   version: 2
