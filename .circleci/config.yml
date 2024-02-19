@@ -31,10 +31,13 @@ jobs:
           channel: $SLACK_DEFAULT_CHANNEL 
           event: fail
           template: basic_fail_1
+          mentions: <@SLACK_USER_ID>
+
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANNEL 
           event: pass
           template: success_tagged_deploy_1
+          mentions: <@SLACK_USER_ID>
 
 workflows:
   version: 2
