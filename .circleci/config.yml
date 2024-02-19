@@ -37,7 +37,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Deployment failed in branch $CIRCLE_USERNAME
+                    "text": "Deployment failed in branch $CIRCLE_BRANCH triggered by $CIRCLE_USERNAME"
                   }
                 }
               ]
@@ -52,7 +52,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Deployment successful in branch $CIRCLE_USERNAME
+                    "text": "Deployment successful in branch $CIRCLE_BRANCH triggered by $CIRCLE_USERNAME"
                   }
                 }
               ]
