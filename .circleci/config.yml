@@ -37,7 +37,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":x: *Failed:* $CIRCLE_USERNAME's workflow (<$CIRCLE_BUILD_URL|build>) in <$CIRCLE_PULL_REQUEST|$CIRCLE_BRANCH>\n- ($CIRCLE_SHA1) by $CIRCLE_USERNAME\n$CIRCLE_JOB job failed.\n<$CIRCLE_BUILD_URL|build> job failed."
+                    "text": ":x: *Failed:* $CIRCLE_USERNAME's workflow (<$CIRCLE_BUILD_URL|build>) in <$CIRCLE_PULL_REQUEST/$CIRCLE_BRANCH>\n- ($CIRCLE_SHA1) by $CIRCLE_USERNAME.\n<$CIRCLE_BUILD_URL|build> job failed."
                   }
                 }
               ]
@@ -52,7 +52,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":white_check_mark: *Success:* $CIRCLE_USERNAME's workflow (<$CIRCLE_BUILD_URL|build>) in <$CIRCLE_PULL_REQUEST|$CIRCLE_BRANCH>\n- ($CIRCLE_SHA1) by $CIRCLE_USERNAME\n$CIRCLE_JOB job succeeded.\n<$CIRCLE_BUILD_URL|build> job succeeded."
+                    "text": ":white_check_mark: *Success:* $CIRCLE_USERNAME's workflow (<$CIRCLE_BUILD_URL|build>) in <$CIRCLE_PULL_REQUEST|$CIRCLE_BRANCH>\n- ($CIRCLE_SHA1) by $CIRCLE_USERNAME.\n<$CIRCLE_BUILD_URL|build> job succeeded."
                   }
                 }
               ]
