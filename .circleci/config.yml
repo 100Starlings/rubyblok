@@ -42,7 +42,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Failed: $CIRCLE_USERNAME's workflow ($CIRCLE_JOB) in $CIRCLE_REPOSITORY_URL ($CIRCLE_BRANCH)\n- [$COMMIT_MESSAGE] ($CIRCLE_SHA1) by $CIRCLE_USERNAME\n$CIRCLE_JOB job failed.\n<$CIRCLE_BUILD_URL|build> job failed."
+                    "text": "Failed: $CIRCLE_USERNAME's workflow ($CIRCLE_JOB) in $CIRCLE_REPOSITORY_URL ($CIRCLE_BRANCH)\n- $COMMIT_MESSAGE ($CIRCLE_SHA1) by $CIRCLE_USERNAME\n$CIRCLE_JOB job failed.\n<$CIRCLE_BUILD_URL|build> job failed."
                   }
                 }
               ]
@@ -57,7 +57,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Success: $CIRCLE_USERNAME's workflow ($CIRCLE_JOB) in $CIRCLE_REPOSITORY_URL ($CIRCLE_BRANCH)\n- [$COMMIT_MESSAGE] ($CIRCLE_SHA1) by $CIRCLE_USERNAME"
+                    "text": "Success: $CIRCLE_USERNAME's workflow ($CIRCLE_JOB) in $CIRCLE_REPOSITORY_URL ($CIRCLE_BRANCH)\n- $COMMIT_MESSAGE ($CIRCLE_SHA1) by $CIRCLE_USERNAME"
                 }
               ]
             }
