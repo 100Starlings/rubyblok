@@ -27,6 +27,11 @@ jobs:
     docker:
       - image: cimg/ruby:3.3.0
     steps:    
+      - run:
+          name: Definir GIT_COMMIT_DESC
+          command: |
+            export GIT_COMMIT_DESC=$(git log --format=%B -n 1 $CIRCLE_SHA1)
+
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANNEL 
           event: fail
@@ -37,7 +42,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Deployment failed in branch $CIRCLE_BRANCH triggered by $CIRCLE_USERNAME"
+                    "text": "Failed: {$CIRCLE_USERNAME}'s workflow ($CIRCLE_TAG) in $CIRCLE_REPOSITORY_URL - $GIT_COMMIT_DESC"
                   }
                 }
               ]
@@ -52,12 +57,11 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Deployment successful in branch $CIRCLE_BRANCH triggered by $CIRCLE_USERNAME"
+                    "text": "Success: {$CIRCLE_USERNAME}'s workflow ($CIRCLE_TAG) in $CIRCLE_REPOSITORY_URL - $GIT_COMMIT_DESC"
                   }
                 }
               ]
             }
-
 
 workflows:
   version: 2
