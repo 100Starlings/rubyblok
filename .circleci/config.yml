@@ -27,6 +27,11 @@ jobs:
     docker:
       - image: cimg/ruby:3.3.0
     steps:    
+      - run:
+          name: Define COMMIT_MESSAGE
+          command: |
+            COMMIT_MESSAGE=$(git log --format="%s" -n 1 $CIRCLE_SHA1)
+
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANNEL 
           event: fail
@@ -37,7 +42,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Failed: $CIRCLE_USERNAME's workflow ($CIRCLE_JOB) in $CIRCLE_REPOSITORY_URL ($CIRCLE_BRANCH)\n- $COMMIT_MESSAGE ($CIRCLE_SHA1) by $CIRCLE_USERNAME"
+                    "text": "Failed: $CIRCLE_USERNAME's workflow ($CIRCLE_JOB) in $CIRCLE_REPOSITORY_URL ($CIRCLE_BRANCH)\n- [COMMIT_MESSAGE] ($CIRCLE_SHA1) by $CIRCLE_USERNAME\n$CIRCLE_JOB job failed.\n<$CIRCLE_BUILD_URL|build> job failed."
                   }
                 }
               ]
@@ -52,10 +57,12 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Success: $CIRCLE_USERNAME's workflow ($CIRCLE_JOB) in $CIRCLE_REPOSITORY_URL ($CIRCLE_BRANCH)\n- $COMMIT_MESSAGE ($CIRCLE_SHA1) by $CIRCLE_USERNAME"
+                    "text": "Success: $CIRCLE_USERNAME's workflow ($CIRCLE_JOB) in $CIRCLE_REPOSITORY_URL ($CIRCLE_BRANCH)\n- [COMMIT_MESSAGE] ($CIRCLE_SHA1) by $CIRCLE_USERNAME\n$CIRCLE_JOB job succeeded.\n<$CIRCLE_BUILD_URL|build> job succeeded."
+                  }
                 }
               ]
             }
+
 
 workflows:
   version: 2
