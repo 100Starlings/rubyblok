@@ -1,10 +1,10 @@
 class GetStoryblokStory
-  def self.call(story_id:)
-    new(story_id:).call
+  def self.call(slug:)
+    new(slug:).call
   end
 
-  def initialize(story_id:)
-    @story_id = story_id
+  def initialize(slug:)
+    @slug = slug
   end
 
   def call
@@ -21,6 +21,6 @@ class GetStoryblokStory
   end
 
   def get_story
-    storyblok_client.story(@story_id)['data']['story']
+    storyblok_client.story(@slug)['data']['story']
   end
 end

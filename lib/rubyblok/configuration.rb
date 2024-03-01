@@ -1,10 +1,6 @@
 module Rubyblok
   class Configuration
-    attr_accessor :api_token, :version
-
-    def initialize
-      self.property = nil
-    end
+    attr_accessor :api_token, :version, :component_path
 
     def property=(value)
       @property = value

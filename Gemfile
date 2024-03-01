@@ -12,6 +12,7 @@ group :development, :test do
   gem "pry"
   gem "rspec"
   gem "webmock"
+  
   gem "storyblok"
   gem "rubocop"
   gem "rubocop-rspec"
