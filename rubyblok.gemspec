@@ -28,7 +28,9 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails"
-  spec.add_dependency "dotenv-rails"
+  spec.add_dependency "rails", '>= 6.1', '< 8.0'
   spec.add_dependency "tailwindcss-rails"
+  spec.add_dependency "hash_dot"
+  spec.add_dependency "storyblok"
+  spec.add_dependency "redcarpet"
 end
