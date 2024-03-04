@@ -21,6 +21,6 @@ class GetStoryblokStory
   end
 
   def get_story
-    storyblok_client.story(@slug)['data']['story']
+    storyblok_client.story(@slug)["data"]["story"]
   end
 end
