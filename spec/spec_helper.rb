@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
-ENV['RAILS_ENV'] = "test"
+ENV["RAILS_ENV"] = "test"
 
-require "rails"
 require "action_controller"
-require "rubyblok"
 require "pry"
-require "webmock/rspec"
-require "storyblok"
 require "redcarpet"
+require "rubyblok"
+require "storyblok"
+require "webmock/rspec"
 
-require 'rubygems'
-require 'bundler/setup'
+require "rubygems"
+require "bundler/setup"
 
 require_relative "support/application_controller"
 

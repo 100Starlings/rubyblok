@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require "hash_dot"
-require "rails"
 
 require_relative "rubyblok/helpers/storyblok_helper"
 require_relative "rubyblok/version"
