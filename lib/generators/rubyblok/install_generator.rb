@@ -1,3 +1,5 @@
+require "rails/generators"
+
 module Rubyblok
   module Generators
     class InstallGenerator < Rails::Generators::Base
