@@ -1,4 +1,5 @@
 require "rails/generators"
+require "rails/generators/active_record"
 
 module Rubyblok
   module Generators
