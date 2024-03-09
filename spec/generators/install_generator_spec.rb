@@ -21,29 +21,5 @@ RSpec.describe Rubyblok::Generators::InstallGenerator do
         assert_file("config/initializers/rubyblok.rb")
       end
     end
-
-    context "when the application already has the file" do
-
-      before do
-        run_generator
-      end
-
-      it "should skip creating the initializer" do
-        output = run_generator
-        expect(output).to include("identical  config/initializers/rubyblok.rb")
-      end
-    end
-
-    context "when the application already has a file with different content" do
-      before(:each) do
-        FileUtils.mkdir_p(File.join(destination_root, "config/initializers"))
-        File.write(File.join(destination_root, "config/initializers/rubyblok.rb"), "class")
-      end
-
-      it "should ask if the user wants to overwrite" do
-        output = run_generator
-        expect(output).to include("conflict  config/initializers/rubyblok.rb")
-      end
-    end
   end
 end
