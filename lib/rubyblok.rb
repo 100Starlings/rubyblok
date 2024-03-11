@@ -6,6 +6,7 @@ require_relative "rubyblok/version"
 require_relative "rubyblok/configuration"
 require_relative "rubyblok/services/get_storyblok_story"
 require_relative "rubyblok/railtie" if defined?(Rails)
+require_relative "generators/rubyblok/install_generator"
 
 module Rubyblok
   def self.configuration
