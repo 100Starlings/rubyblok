@@ -7,6 +7,7 @@ RSpec.describe Rubyblok::Generators::InstallGenerator do
   destination(File.join(Dir.tmpdir, "files"))
 
   before(:each) do
+    stub_const("STORYBLOK_API_TOKEN", "token")
     prepare_destination
   end
 
@@ -17,8 +18,11 @@ RSpec.describe Rubyblok::Generators::InstallGenerator do
         run_generator
       end
 
-      it "should create the initializer file" do
+      it "should create the initializer file with the right content" do
         assert_file("config/initializers/rubyblok.rb")
+        assert_file("config/initializers/rubyblok.rb") do |content|
+          assert_match(/token/, content)
+        end
       end
     end
   end
