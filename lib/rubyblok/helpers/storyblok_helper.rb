@@ -15,7 +15,7 @@ module StoryblokHelper
   end
 
   def rubyblok_component_tag(blok:, partial: blok.component)
-    render_partial partial:, locals: { blok: }
+    render_partial(partial:, locals: { blok: }).prepend(rubyblok_editable_tag(blok).to_s)
   end
 
   def rubyblok_markdown_tag(content)
@@ -41,7 +41,7 @@ module StoryblokHelper
     GetStoryblokStory.call(slug:)
   end
 
-  def rich_text_renderer
+  def rich_text_renderer # rubocop:disable Metrics/MethodLength
     ctx = {}
     path = component_path
     @rich_text_renderer ||=
