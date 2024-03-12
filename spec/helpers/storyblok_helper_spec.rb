@@ -15,7 +15,8 @@ RSpec.describe StoryblokHelper do
         { "type" => "paragraph",
           "content" =>
             [{ "text" => "this is a richtext",
-               "type" => "text" }]}]}.to_dot
+               "type" => "text" }] },
+      ] }.to_dot
   end
 
   before do
@@ -62,18 +63,21 @@ RSpec.describe StoryblokHelper do
   end
 
   describe "#rubyblok_component_tag" do
-
     context "when is a simple component" do
+      let(:editable) { "<!--#storyblok\#{\"name\": \"editable_name\"}-->" }
+
       let(:component_object) do
-        { "component" => "page",
+        {
+          "component" => "page",
           "title" => "homepage",
-          "_editable" => "editable" }.to_dot
+          "_editable" => editable,
+        }.to_dot
       end
 
       it "render the right partial" do
         result = storyblok_helper.rubyblok_component_tag(blok: component_object)
 
-        expect(result.squish).to eq("<head> homepage </head>")
+        expect(result.squish).to eq("<!--#storyblok\#{\"name\": \"editable_name\"}--><head> homepage </head>")
       end
     end
 
@@ -85,7 +89,6 @@ RSpec.describe StoryblokHelper do
             { "component" => "button", "title" => "button1" },
             { "component" => "button", "title" => "button2" },
           ],
-          "_editable" => "_editable",
         }.to_dot
       end
 
@@ -101,14 +104,28 @@ RSpec.describe StoryblokHelper do
 
       let(:component_object) do
         { "component" => "page",
-          "text" => "hello",
-          "_editable" => "editable" }.to_dot
+          "text" => "hello"
+           }.to_dot
       end
 
       it "render the right partial" do
         result = storyblok_helper.rubyblok_component_tag(blok: component_object, partial:)
 
         expect(result.squish).to eq("<aside> hello </aside>")
+      end
+    end
+
+    context "when the _editable is not present" do
+      let(:component_object) do
+        { "component" => "page",
+          "title" => "homepage",
+          "_editable" => "" }.to_dot
+      end
+
+      it "render the right partial" do
+        result = storyblok_helper.rubyblok_component_tag(blok: component_object)
+
+        expect(result.squish).to eq("<head> homepage </head>")
       end
     end
   end
@@ -161,8 +178,7 @@ RSpec.describe StoryblokHelper do
               [{ "type" => "",
                 "title" => "richtext",
                 "component" => "button",
-                "button_link" => "",
-                "_editable" => "_editable" }] } },
+                "button_link" => "" }] } },
           { "type" => "paragraph", "content" => [{ "text" => "Richtext test", "type" => "text" }] }] }.to_dot
       end
 
@@ -181,8 +197,7 @@ RSpec.describe StoryblokHelper do
         "name" => "Home",
         "content" => {
           "title" => "homepage",
-          "component" => "page",
-          "_editable" => "editable",
+          "component" => "page"
         },
         "schema" => "page",
       }.to_dot
@@ -205,16 +220,13 @@ RSpec.describe StoryblokHelper do
         "cta_buttons" => [
           {
             "title" => "Try for free",
-            "component" => "button",
-            "_editable" => "editable",
+            "component" => "button"
           },
           {
             "title" => "Discover more",
-            "component" => "button",
-            "_editable" => "editable",
+            "component" => "button"
           },
-        ],
-        "_editable" => "editable",
+        ]
       }.to_dot
     end
 

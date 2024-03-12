@@ -8,6 +8,7 @@ gemspec
 gem "rake"
 
 group :development, :test do
+  gem "rails"
   gem "bundler"
   gem "pry"
   gem "rspec"
@@ -15,4 +16,5 @@ group :development, :test do
 
   gem "rubocop"
   gem "rubocop-rspec"
+  gem "generator_spec"
 end
