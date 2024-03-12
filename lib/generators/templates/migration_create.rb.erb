@@ -1,0 +1,11 @@
+class CreateRubyblok<%= class_name.pluralize %> < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :<%= table_name %> do |t|
+      t.string :storyblok_story_id
+      t.string :storyblok_story_slug
+      t.string :storyblok_story_content
+    end
+
+    add_index :<%= table_name %>, :storyblok_story_slug, unique: true
+  end
+end

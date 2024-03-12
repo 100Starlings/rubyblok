@@ -14,6 +14,8 @@ require "rubygems"
 require "bundler/setup"
 require "rubyblok"
 require "generator_spec"
+require "rails/generators"
+require "rails/generators/active_record"
 
 require_relative "support/application_controller"
 
