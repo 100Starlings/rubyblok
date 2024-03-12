@@ -1,3 +1,5 @@
+require "rubyblok/helpers/storyblok_helper"
+
 class ApplicationController < ::ActionController::Base
   helper StoryblokHelper
 
