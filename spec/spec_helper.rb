@@ -7,15 +7,12 @@ require "action_controller"
 require "support/application_controller"
 require "redcarpet"
 require "storyblok"
-require "webmock/rspec"
-
-require "generator_spec"
 require "pry"
 require "webmock/rspec"
 require "rubygems"
 require "bundler/setup"
 require "rubyblok"
-
+require "generator_spec"
 
 require "rails/generators"
 require "rails/generators/active_record"
