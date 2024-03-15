@@ -6,13 +6,13 @@ This integration allows you to edit your content online, preview it in real-time
 In addition, Rubyblok provides an abstraction layer and stores all your content locally, reducing data usage and enhancing performance. This enables new functionalities that leverage the local data, such as global content search, sitemaps, and listings. Ultimately, this setup increases resilience by eliminating dependency on external data sources.
 
 ## Table of Contents
-[Installation](#installation)
-[Getting Started](#started) 🚧
-[Rubyblok tags](#tags)
-[How to Run Tests](#tests)
-[Guide for Contributing](#guide)
-[How to Contact Us](#contact)
-[License](#license)
+1. [Installation](#installation)
+2. [Getting Started](#getting-started) 🚧
+3. [Rubyblok tags](#rubyblok-tags)
+4. [How to Run Tests](#how-to-run-tests)
+5. [Guide for Contributing](#guide-for-contributing)
+6. [How to Contact Us](#how-to-contact-us)
+7. [License](#license)
 
 ## Installation
 To install Rubyblok, add the following line to your Gemfile and run bundle install:
