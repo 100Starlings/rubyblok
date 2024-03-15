@@ -2,12 +2,14 @@
 ## Introduction
 Rubyblok is a versatile Ruby gem designed for a Content Management System (CMS) integration.
 This gem offers an easy way to integrate a visual CMS - Storyblok - into your Rails app, providing you with quality-of-life features.
+
 This integration allows you to edit your content online, preview it in real-time, and publish with just the click of a button.
+
 In addition, Rubyblok provides an abstraction layer and stores all your content locally, reducing data usage and enhancing performance. This enables new functionalities that leverage the local data, such as global content search, sitemaps, and listings. Ultimately, this setup increases resilience by eliminating dependency on external data sources.
 
 ## Table of Contents
 1. [Installation](#installation)
-2. [Getting Started](#getting-started) 🚧
+2. [Getting Started](#getting-started)
 3. [Rubyblok tags](#rubyblok-tags)
 4. [How to Run Tests](#how-to-run-tests)
 5. [Guide for Contributing](#guide-for-contributing)
@@ -43,8 +45,8 @@ STORYBLOK_VERSION=draft
 STORYBLOK_WEBHOOK_SECRET=''
 ```
 
-## Getting Started 🚧
-[WIP]
+## Getting Started 
+[WIP] 🚧
 
 ## Rubyblok tags 
 ### rubyblok_story_tag
