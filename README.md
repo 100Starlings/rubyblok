@@ -14,7 +14,7 @@ In addition, Rubyblok provides an abstraction layer and stores all your content 
 [How to Contact Us](#contact)
 [License](#license)
 
-## Installation {#installation}
+## Installation
 To install Rubyblok, add the following line to your Gemfile and run bundle install:
 ```
 gem 'rubyblok'
