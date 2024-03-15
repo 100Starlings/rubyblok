@@ -33,9 +33,11 @@ gem 'rubyblok', git: '<https://github.com/100Starlings/rubyblok>', ref: '2bb1059
 ```
 
 ### Storyblok account and variables
-Click here to create a free acount at Storyblok, the CMS platform where you will have access to the visual and real-time content editing.
-Get your Storyblok API token in your account, at Storyblok Space > Settings > Access tokens page. Copy the "Preview" access level key.
-Add the key to your STORYBLOK_API_TOKEN in your env file, like this example:
+[Click here](https://app.storyblok.com/?_gl=1*196uoul*_gcl_au*MTg1NjA5NjA0MS4xNzA5MDY5ODk3#!/signup) to create a free acount at Storyblok, the CMS platform where you will have access to the visual and real-time content editing.
+
+Get your Storyblok API token in your account, at _Storyblok Space > Settings > Access tokens_ page. Copy the "Preview" access level key.
+
+Add the key to your `STORYBLOK_API_TOKEN` in your env file, like this example:
 ```
 STORYBLOK_API_TOKEN=<your API token>
 ```
