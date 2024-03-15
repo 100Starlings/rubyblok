@@ -43,10 +43,10 @@ STORYBLOK_VERSION=draft
 STORYBLOK_WEBHOOK_SECRET=''
 ```
 
-## Getting Started {#started} 🚧
+## Getting Started 🚧
 [WIP]
 
-## Rubyblok tags {#tags}
+## Rubyblok tags 
 ### rubyblok_story_tag
 Use this tag to create pages:
 ```
@@ -103,18 +103,18 @@ Use this tag to render more than one component:
 <%= rubyblok_blocks_tag(blok.section_content) %>
 ```
 
-## How to Run Tests {#tests}
+## How to Run Tests
 You can run unit tests for RubyBlok with the following command:
 ```
 bundle exec rspec
 ```
 
-## Guide for Contributing {#guide}
+## Guide for Contributing
 Contributions are made to this repository via Issues and Pull Requests (PRs).
 Issues should be used to report bugs, request a new feature, or to discuss potential changes before a PR is created.
 
-## How to Contact Us {#contact}
+## How to Contact Us
 For any inquiries, reach out to us at: info@rubyblok.com
 
-## License {#license}
+## License
 RubyBlok is released under the MIT License.
