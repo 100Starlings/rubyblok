@@ -4,8 +4,6 @@ require:
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.3.0
-  Include:
-     - config/initializers/*
 
 Capybara/VisibilityMatcher:
   Enabled: false

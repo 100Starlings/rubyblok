@@ -23,48 +23,18 @@ jobs:
           command: |
             bundle exec rspec
 
-  notification:
-    docker:
-      - image: cimg/ruby:3.3.0
-    steps:    
       - slack/notify:
-          channel: $SLACK_DEFAULT_CHANNEL 
           event: fail
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":x: *Failed:* $CIRCLE_USERNAME's workflow (<$CIRCLE_BUILD_URL|build>) in <$CIRCLE_PULL_REQUEST/$CIRCLE_BRANCH>\n- ($CIRCLE_SHA1) by $CIRCLE_USERNAME.\n<$CIRCLE_BUILD_URL|build> job failed."
-                  }
-                }
-              ]
-            }
-      - slack/notify:
-          channel: $SLACK_DEFAULT_CHANNEL 
-          event: pass
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":white_check_mark: *Success:* $CIRCLE_USERNAME's workflow (<$CIRCLE_BUILD_URL|build>) in <$CIRCLE_PULL_REQUEST|$CIRCLE_BRANCH>\n- ($CIRCLE_SHA1) by $CIRCLE_USERNAME.\n<$CIRCLE_BUILD_URL|build> job succeeded."
-                  }
-                }
-              ]
-            }
+          template: basic_fail_1
 
+      - slack/notify:
+          event: pass
+          template: basic_success_1
 
 workflows:
   version: 2
   build_and_notify:
     jobs:
-      - build
-      - notification:
-          context: CircleCI
-          requires:
-            - build
+      - build:
+          context:
+            - SLACK_ACCESS_TOKEN
