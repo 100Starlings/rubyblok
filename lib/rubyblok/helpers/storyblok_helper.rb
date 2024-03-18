@@ -18,6 +18,7 @@ module StoryblokHelper
     render_partial(partial:, locals: { blok: }).prepend(rubyblok_editable_tag(blok).to_s)
   end
 
+  # rubocop:disable Rails/OutputSafety
   def rubyblok_markdown_tag(content)
     markdown_renderer.render(content).html_safe
   end
@@ -25,6 +26,7 @@ module StoryblokHelper
   def rubyblok_richtext_tag(content)
     rich_text_renderer.render(content).html_safe
   end
+  # rubocop:enable Rails/OutputSafety
 
   def rubyblok_blocks_tag(bloks)
     template =
@@ -59,9 +61,11 @@ module StoryblokHelper
     @markdown_renderer ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
   end
 
+  # rubocop:disable Rails/OutputSafety
   def rubyblok_editable_tag(component)
     component["_editable"]&.html_safe
   end
+  # rubocop:enable Rails/OutputSafety
 
   def component_path
     Rubyblok.configuration.component_path

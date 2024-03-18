@@ -1,11 +1,10 @@
 require:
   - rubocop-rspec
+  - rubocop-rails
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.3.0
-  Include:
-     - config/initializers/*
+  TargetRubyVersion: 3.1.X
 
 Capybara/VisibilityMatcher:
   Enabled: false
@@ -143,4 +142,8 @@ RSpec/StubbedMock:
 RSpec/VerifiedDoubles:
   Enabled: false
 RSpec/VerifiedDoubleReference:
+  Enabled: false
+RSpec/FilePath:
+  Enabled: false
+RSpec/SpecFilePathFormat:
   Enabled: false

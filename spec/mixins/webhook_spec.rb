@@ -2,8 +2,7 @@ require "spec_helper"
 
 RSpec.describe Rubyblok::Mixins::Webhook, type: :controller do
   describe "#create" do
-
-    let(:subject) { Class.new { include Rubyblok::Mixins::Webhook } }
+    let(:subject) { Class.new { include Rubyblok::Mixins::Webhook } } # rubocop:disable RSpec/SubjectDeclaration
     let(:instance) { subject.new }
 
     let(:api_token)      { "api_token" }
@@ -14,10 +13,10 @@ RSpec.describe Rubyblok::Mixins::Webhook, type: :controller do
 
     before do
       allow(instance).to receive(:render).with(json: { success: true }).and_return({ success: true })
-      allow(Rubyblok.configuration).to receive_messages(api_token: api_token,
-                                                        version: version,
-                                                        component_path: component_path,
-                                                        webhook_secret: webhook_secret)
+      allow(Rubyblok.configuration).to receive_messages(api_token:,
+                                                        version:,
+                                                        component_path:,
+                                                        webhook_secret:)
     end
 
     context "when the webhook receives an update" do
