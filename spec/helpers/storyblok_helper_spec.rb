@@ -104,8 +104,7 @@ RSpec.describe StoryblokHelper do
 
       let(:component_object) do
         { "component" => "page",
-          "text" => "hello"
-           }.to_dot
+          "text" => "hello" }.to_dot
       end
 
       it "render the right partial" do
@@ -197,7 +196,7 @@ RSpec.describe StoryblokHelper do
         "name" => "Home",
         "content" => {
           "title" => "homepage",
-          "component" => "page"
+          "component" => "page",
         },
         "schema" => "page",
       }.to_dot
@@ -220,13 +219,13 @@ RSpec.describe StoryblokHelper do
         "cta_buttons" => [
           {
             "title" => "Try for free",
-            "component" => "button"
+            "component" => "button",
           },
           {
             "title" => "Discover more",
-            "component" => "button"
+            "component" => "button",
           },
-        ]
+        ],
       }.to_dot
     end
 

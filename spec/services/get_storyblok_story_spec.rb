@@ -28,8 +28,8 @@ describe GetStoryblokStory do
 
       before do
         allow(Rubyblok.configuration).to receive(:api_token).and_return(api_token)
-        stub_request(:get, /api.storyblok.com/).
-         to_return(body: { "story" => story_data }.to_json)
+        stub_request(:get, /api.storyblok.com/)
+          .to_return(body: { "story" => story_data }.to_json)
       end
 
       it "returns the story data" do

@@ -8,13 +8,14 @@ gemspec
 gem "rake"
 
 group :development, :test do
-  gem "rails"
   gem "bundler"
   gem "pry"
+  gem "rails"
   gem "rspec"
   gem "webmock"
 
-  gem "rubocop"
-  gem "rubocop-rspec"
   gem "generator_spec"
+  gem "rubocop"
+  gem "rubocop-rails"
+  gem "rubocop-rspec"
 end

@@ -10,9 +10,11 @@ module Rubyblok
 
       def install
         if table_exist?
-          migration_template("migration_update.rb.erb", "db/migrate/update_rubyblok_#{plural_file_name}.rb", migration_version:)
+          migration_template("migration_update.rb.erb", "db/migrate/update_rubyblok_#{plural_file_name}.rb",
+                             migration_version:)
         else
-          migration_template("migration_create.rb.erb", "db/migrate/create_rubyblok_#{plural_file_name}.rb", migration_version:)
+          migration_template("migration_create.rb.erb", "db/migrate/create_rubyblok_#{plural_file_name}.rb",
+                             migration_version:)
         end
 
         create_or_update_model

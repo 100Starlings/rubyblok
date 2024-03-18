@@ -10,13 +10,14 @@ RSpec.describe Rubyblok::Generators::WebhookControllerGenerator, type: :generato
 
   before do
     prepare_destination
-
   end
+
   context "when running the migration generator" do
     before do
       FileUtils.mkdir_p(File.join(destination_root, "config"))
       File.write(File.join(destination_root, "config/routes.rb"), "Rails.application.routes.draw do \n end")
     end
+
     it "creates the model file" do
       result = run_generator([name])
 

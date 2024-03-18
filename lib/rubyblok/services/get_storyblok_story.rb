@@ -13,7 +13,7 @@ class GetStoryblokStory
 
   private
 
-  def storyblok_client(version: "draft")
+  def storyblok_client(version: "draft") # rubocop:disable Lint/UnusedMethodArgument
     Storyblok::Client.new(
       token: Rubyblok.configuration.api_token,
       version: Rubyblok.configuration.version

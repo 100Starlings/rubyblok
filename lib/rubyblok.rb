@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "hash_dot"
 require "rails"
 require "action_controller"
@@ -11,10 +12,7 @@ require_relative "rubyblok/mixins/model"
 require_relative "generators/rubyblok/migration_generator"
 require_relative "generators/rubyblok/install_generator"
 
-require_relative "rubyblok/mixins/model"
 require_relative "rubyblok/mixins/webhook"
-require_relative "generators/rubyblok/migration_generator"
-require_relative "generators/rubyblok/install_generator"
 require_relative "generators/rubyblok/webhook_controller_generator"
 
 module Rubyblok

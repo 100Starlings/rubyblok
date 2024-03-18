@@ -6,7 +6,7 @@ module Rubyblok
       included do
         def create
           # TODO: Waiting [RB-223] - Caching Storybloks pages
-          render json: {success: true}
+          render json: { success: true }
         end
       end
     end

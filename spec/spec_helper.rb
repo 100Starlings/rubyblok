@@ -17,7 +17,6 @@ require "generator_spec"
 require "rails/generators"
 require "rails/generators/active_record"
 
-
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
