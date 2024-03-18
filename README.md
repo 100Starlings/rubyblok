@@ -35,6 +35,8 @@ gem 'rubyblok', git: '<https://github.com/100Starlings/rubyblok>', ref: '2bb1059
 ### Storyblok account and variables
 [Click here](https://app.storyblok.com/?_gl=1*196uoul*_gcl_au*MTg1NjA5NjA0MS4xNzA5MDY5ODk3#!/signup) to create a free acount at Storyblok, the CMS platform where you will have access to the visual and real-time content editing.
 
+Create a new Space, in _Spaces > Add Space_.
+
 Get your Storyblok API token in your account, at _Storyblok Space > Settings > Access tokens_ page. Copy the "Preview" access level key.
 
 Add the key to your `STORYBLOK_API_TOKEN` in your env file, like this example:
@@ -118,12 +120,12 @@ And then create another file for the hero section block `_hero-section.html.erb`
 ```
 
 ### Creating your page at Storyblok
-1. Once your logged in, access your demo space in the "My Spaces" section.
+1. Once you're logged in, access your new space in the "My Spaces" section
 2. Go to the "Content" section
 3. Click the CTA "Create new" > Story
 4. Name your story "Page", so it connects to our previous code. The content type is "default page".
 5. Open your new page to start editing.
-6. At the right side, you can add new blocks to your page. Create a new block by clicking the plus button.
+6. On the right side, you can add new blocks to your page. Create a new block by clicking the plus button.
 7. This will open the Insert block section, then add the "Hero Section" block.
 8. Open your block and add any text you want to it.
 9. Click the Publish button in the right top corner.
@@ -132,9 +134,17 @@ Now you have your first demo page and block created. Start your rails server and
 
 By doing this initial setup, you are able to see your first Storyblok page inside your app and edit its content in the Storyblok admin interface 🎉
 
-### Local proxy to Storyblok
-To be able to see a preview of your changes in the Storyblok interface, you can connect the preview to your local environment.
-To connect with the Storyblok space we have to create a local proxy. For that, first create a PEM certificate for your `localhost`:
+### Activate the visual editor
+Here are the steps to configure the visual editor at Storyblok. This allows you to see a preview of your changes in the Storyblok interface as you edit and save.
+
+At Storyblok, select your Space and go to _Settings > Visual Editor_. 
+
+In the "Location (default environment)" input, add your localhost address:
+```
+https://localhost:3333
+```
+
+Then we have to create a local proxy. For that, first create a PEM certificate for your `localhost`:
 
 ```bash
 brew install mkcert
