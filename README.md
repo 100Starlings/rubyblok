@@ -48,7 +48,110 @@ STORYBLOK_WEBHOOK_SECRET=''
 ```
 
 ## Getting Started 
-[WIP] 🚧
+### Your first Rubyblok page
+Let's get started with Rubyblok by creating our first page.
+
+First, you need to run the install generator, which will create the initializer for you:
+```bash
+rails g rubyblok:install
+```
+
+Now let's generate and run a migration to create the `page` table:
+```bash
+rails g rubyblok:migration PAGE
+
+rails db:migrate
+```
+
+Then, generate the webhook controller:
+```bash
+rails g rubyblok:webhook_controller STORYBLOK_WEBHOOK
+```
+Also add this code to your `routes.rb` file:
+```
+resources :storyblok_webhook, only: :create
+```
+The Storyblok webhook is responsible for updating and deleting content in our local database in case of changes of content in Storyblok.
+
+Finally, generate the pages controller:
+```bash
+rails g controller pages_controller
+```
+Add the following code to your pages controller:
+```
+ include StoryblokHelper
+    def index
+        response.headers['X-FRAME-OPTIONS'] = 'ALLOWALL'
+        @slug = "page"
+        @page_content = GetStoryblokStory.call(slug: 'page').fetch('content')
+    end
+```
+
+Add this code to your app/views/pages/index.html.erb file:
+```
+<%= rubyblok_story_tag(@slug) %>
+```
+Configure your `routes.rb` file to call the pages controller.
+
+Create a `shared` directory in the `views` directory and a new folder named `storyblok` inside of it: `views/shared/storyblok`. 
+This directory is going to store the partials that call Storyblok components.
+You can change the folder settings at the `rubyblok.rb` file as needed:
+```
+config.component_path = "shared/storyblok"
+```
+
+Inside the `views/shared/storyblok` folder, create a file named `_default-page.html.erb` with the following code:
+```
+<%= rubyblok_blocks_tag(blok.body) %>
+```
+
+And then create another file for the hero section block `_hero-section.html.erb` (more explanation on that later):
+```
+<section class="hero_section">
+  <div class="hero_content_wrapper">
+    <div class="hero_header flex flex-col items-center">
+      <%= rubyblok_content_tag(blok.headline) %>
+      <%= rubyblok_content_tag(blok.subheadline) %>
+    </div>
+  </div>
+</section>
+```
+
+### Creating your page at Storyblok
+1. Once your logged in, access your demo space in the "My Spaces" section.
+2. Go to the "Content" section
+3. Click the CTA "Create new" > Story
+4. Name your story "Page", so it connects to our previous code. The content type is "default page".
+5. Open your new page to start editing.
+6. At the right side, you can add new blocks to your page. Create a new block by clicking the plus button.
+7. This will open the Insert block section, then add the "Hero Section" block.
+8. Open your block and add any text you want to it.
+9. Click the Publish button in the right top corner.
+
+Now you have your first demo page and block created. Start your rails server and you will be able to see it in your application.
+
+By doing this initial setup, you are able to see your first Storyblok page inside your app and edit its content in the Storyblok admin interface 🎉
+
+### Local proxy to Storyblok
+To be able to see a preview of your changes in the Storyblok interface, you can connect the preview to your local environment.
+To connect with the Storyblok space we have to create a local proxy. For that, first create a PEM certificate for your `localhost`:
+
+```bash
+brew install mkcert
+mkcert -install
+mkcert localhost
+```
+
+This will create the `localhost-key.pem` and `localhost.pem` files.
+
+To run the proxy, use the `local-ssl-proxy` tool:
+
+```bash
+npm install local-ssl-proxy -g
+local-ssl-proxy --source 3333 --target 3000 --cert localhost.pem --key localhost-key.pem
+```
+
+This will start a proxy server. Now, just go to the Storyblok Space and it will be working! :tada:
 
 ## Rubyblok tags 
 ### rubyblok_story_tag
