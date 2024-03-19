@@ -10,7 +10,12 @@ module StoryblokHelper
   end
 
   def rubyblok_story_tag(slug)
-    content = get_story_via_api(slug)["content"].to_dot
+    content =
+      if use_cache?
+        get_story_via_cache(slug)["content"].to_dot
+      else
+        get_story_via_api(slug)["content"].to_dot
+      end
     rubyblok_component_tag(partial: content.component, blok: content)
   end
 
@@ -37,10 +42,22 @@ module StoryblokHelper
     render_inline_partial template:, locals: { bloks: }
   end
 
+  def get_story(slug)
+    if use_cache?
+      get_story_via_cache(slug)["content"].to_dot
+    else
+      get_story_via_api(slug)["content"].to_dot
+    end
+  end
+
   private
 
   def get_story_via_api(slug)
-    GetStoryblokStory.call(slug:)
+    Rubyblok::Services::GetStoryblokStory.call(slug:)
+  end
+
+  def get_story_via_cache(slug)
+    Rubyblok.configuration.model_name.classify.constantize.fetch_content(slug)
   end
 
   def rich_text_renderer # rubocop:disable Metrics/MethodLength
@@ -77,5 +94,9 @@ module StoryblokHelper
 
   def render_inline_partial(template:, locals:)
     ApplicationController.render inline: template, locals:
+  end
+
+  def use_cache?
+    Rubyblok.configuration.cached
   end
 end

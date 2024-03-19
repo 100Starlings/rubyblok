@@ -203,7 +203,7 @@ RSpec.describe StoryblokHelper do
     end
 
     before do
-      allow(GetStoryblokStory).to receive(:call).and_return(story_data)
+      allow(Rubyblok::Services::GetStoryblokStory).to receive(:call).and_return(story_data)
     end
 
     it "returns the right view" do

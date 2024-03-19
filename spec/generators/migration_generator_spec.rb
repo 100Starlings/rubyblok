@@ -51,7 +51,7 @@ RSpec.describe Rubyblok::Generators::MigrationGenerator, type: :generator do
 
     it "creates the model file" do
       assert_file("app/models/#{name}.rb") do |content|
-        expect(content).to match(/include Rubyblok::Mixins:Model/)
+        expect(content).to match(/include Rubyblok::Mixins::Model/)
       end
     end
   end

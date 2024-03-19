@@ -4,6 +4,8 @@ class CreateRubyblok<%= class_name.pluralize %> < ActiveRecord::Migration<%= mig
       t.string :storyblok_story_id
       t.string :storyblok_story_slug
       t.string :storyblok_story_content
+
+      t.timestamps
     end
 
     add_index :<%= table_name %>, :storyblok_story_slug, unique: true

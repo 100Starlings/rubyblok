@@ -3,6 +3,7 @@
 require "hash_dot"
 require "rails"
 require "action_controller"
+
 require_relative "rubyblok/helpers/storyblok_helper"
 require_relative "rubyblok/version"
 require_relative "rubyblok/configuration"
