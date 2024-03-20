@@ -5,6 +5,8 @@ ENV["RAILS_ENV"] = "test"
 require "rails"
 require "action_controller"
 require "support/application_controller"
+require "support/webhook_controller"
+
 require "redcarpet"
 require "storyblok"
 require "pry"

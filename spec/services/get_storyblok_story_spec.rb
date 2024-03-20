@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe GetStoryblokStory do
+describe Rubyblok::Services::GetStoryblokStory do
   describe ".call" do
     context "with valid story ID" do
       let(:slug) { "valid_story_id" }
@@ -33,7 +33,7 @@ describe GetStoryblokStory do
       end
 
       it "returns the story data" do
-        expect(GetStoryblokStory.call(slug:)).to eq(story_data)
+        expect(described_class.call(slug:)).to eq(story_data)
       end
     end
   end

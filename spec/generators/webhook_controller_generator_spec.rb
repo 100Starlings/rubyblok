@@ -8,9 +8,7 @@ RSpec.describe Rubyblok::Generators::WebhookControllerGenerator, type: :generato
   tests(described_class)
   destination(File.join(Dir.tmpdir, "files"))
 
-  before do
-    prepare_destination
-  end
+  before { prepare_destination }
 
   context "when running the migration generator" do
     before do

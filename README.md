@@ -17,6 +17,7 @@ In addition, Rubyblok provides an abstraction layer and stores all your content 
 7. [License](#license)
 
 ## Installation
+
 To install Rubyblok, add the following line to your Gemfile and run bundle install:
 ```
 gem 'rubyblok'
@@ -33,6 +34,7 @@ gem 'rubyblok', git: '<https://github.com/100Starlings/rubyblok>', ref: '2bb1059
 ```
 
 ### Storyblok account and variables
+
 [Click here](https://app.storyblok.com/?_gl=1*196uoul*_gcl_au*MTg1NjA5NjA0MS4xNzA5MDY5ODk3#!/signup) to create a free acount at Storyblok, the CMS platform where you will have access to the visual and real-time content editing.
 
 Create a new Space, in _Spaces > Add Space_.
@@ -40,6 +42,7 @@ Create a new Space, in _Spaces > Add Space_.
 Get your Storyblok API token in your account, at _Storyblok Space > Settings > Access tokens_ page. Copy the "Preview" access level key.
 
 Add the key to your `STORYBLOK_API_TOKEN` in your env file, like this example:
+
 ```
 STORYBLOK_API_TOKEN=<your API token>
 ```
@@ -49,7 +52,8 @@ STORYBLOK_VERSION=draft
 STORYBLOK_WEBHOOK_SECRET=''
 ```
 
-## Getting Started 
+## Getting Started
+
 ### Your first Rubyblok page
 Let's get started with Rubyblok by creating our first page.
 
@@ -95,7 +99,7 @@ Add this code to your app/views/pages/index.html.erb file:
 ```
 Configure your `routes.rb` file to call the pages controller.
 
-Create a `shared` directory in the `views` directory and a new folder named `storyblok` inside of it: `views/shared/storyblok`. 
+Create a `shared` directory in the `views` directory and a new folder named `storyblok` inside of it: `views/shared/storyblok`.
 This directory is going to store the partials that call Storyblok components.
 You can change the folder settings at the `rubyblok.rb` file as needed:
 ```
@@ -163,7 +167,8 @@ local-ssl-proxy --source 3333 --target 3000 --cert localhost.pem --key localhost
 
 This will start a proxy server. Now, just go to the Storyblok Space and it will be working! :tada:
 
-## Rubyblok tags 
+## Rubyblok tags
+
 ### rubyblok_story_tag
 Use this tag to create pages:
 ```
@@ -210,7 +215,8 @@ blok = { "type" => "doc",
             [{ "text" => "this is a richtext",
                "type" => "text" }]}]}.to_dot
 
-<%= rubyblok_richtext_tag blok: blok > %> 
+<%= rubyblok_richtext_tag blok: blok > %>
+
 #Output: "<p>this is a richtext</p>"
 ```
 
@@ -221,6 +227,7 @@ Use this tag to render more than one component:
 ```
 
 ## How to Run Tests
+
 You can run unit tests for RubyBlok with the following command:
 ```
 bundle exec rspec
@@ -234,4 +241,5 @@ Issues should be used to report bugs, request a new feature, or to discuss poten
 For any inquiries, reach out to us at: info@rubyblok.com
 
 ## License
+
 RubyBlok is released under the MIT License.

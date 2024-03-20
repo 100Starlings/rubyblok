@@ -32,5 +32,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "railties", ">= 7.1.3", "< 8.0"
   spec.add_dependency "redcarpet"
   spec.add_dependency "storyblok"
+
   spec.metadata["rubygems_mfa_required"] = "true"
 end

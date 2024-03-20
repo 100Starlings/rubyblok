@@ -18,6 +18,7 @@ module Rubyblok
         end
 
         create_or_update_model
+        add_model_name_to_config
       end
 
       def self.next_migration_number(dirname)
@@ -44,7 +45,7 @@ module Rubyblok
 
       def add_mixins_to_existing_model
         model_path = "app/models/#{file_name}.rb"
-        mixins_code = "\n  include Rubyblok::Mixins:Model\n"
+        mixins_code = "\n  include Rubyblok::Mixins::Model\n"
 
         insert_into_file model_path, after: "class #{class_name} < ApplicationRecord" do
           mixins_code
@@ -53,6 +54,13 @@ module Rubyblok
 
       def generate_new_model_from_template
         template("model.rb.erb", "app/models/#{file_name}.rb")
+      end
+
+      def add_model_name_to_config
+        model_path = "config/initializers/rubyblok.rb"
+        insert_into_file model_path, after: 'config.model_name     = "' do
+          class_name
+        end
       end
     end
   end
