@@ -4,7 +4,7 @@ module Rubyblok
       extend ActiveSupport::Concern
 
       included do
-        skip_before_action :verify_authenticity_token
+        skip_before_action :verify_authenticity_token, only: [:create]
 
         def create
           payload = JSON.parse(request.raw_post)

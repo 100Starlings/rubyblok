@@ -5,5 +5,5 @@ class ApplicationController < ActionController::Base
 
   prepend_view_path "spec/support/views"
 
-  def self.skip_before_action(method); end
+  def self.skip_before_action(*method); end
 end

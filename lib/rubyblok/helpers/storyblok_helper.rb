@@ -10,12 +10,7 @@ module StoryblokHelper
   end
 
   def rubyblok_story_tag(slug)
-    content =
-      if use_cache?
-        get_story_via_cache(slug)["content"].to_dot
-      else
-        get_story_via_api(slug)["content"].to_dot
-      end
+    content = get_story(slug)
     rubyblok_component_tag(partial: content.component, blok: content)
   end
 
