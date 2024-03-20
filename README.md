@@ -82,7 +82,7 @@ end
 
 Add this code to your app/views/home/index.html.erb file:
 ```
-<%= rubyblok_story_tag('page') %>
+<%= rubyblok_story_tag('home') %>
 ```
 Configure your `routes.rb` file to call the home controller.
 
@@ -92,19 +92,17 @@ You can change the folder settings at the `rubyblok.rb` file as needed:
 config.component_path = "shared/storyblok"
 ```
 
-Inside the `views/shared/storyblok` folder, create a file named `_default-page.html.erb` with the following code:
+Inside the `views/shared/storyblok` folder, create a file named `_page.html.erb` with the following code:
 ```
 <%= rubyblok_blocks_tag(blok.body) %>
 ```
 
-And then create another file for the hero section block `_hero-section.html.erb` (more explanation on that later):
+And then create another file for the hero section block `_hero_section.html.erb` (more explanation on that later):
 ```
-<section class="hero_section">
-  <div class="hero_content_wrapper">
-    <div class="hero_header flex flex-col items-center">
-      <%= rubyblok_content_tag(blok.headline) %>
-      <%= rubyblok_content_tag(blok.subheadline) %>
-    </div>
+<section>
+  <div>
+    <%= rubyblok_content_tag(blok.headline) %>
+    <%= rubyblok_content_tag(blok.subheadline) %>
   </div>
 </section>
 ```
@@ -116,9 +114,9 @@ And then create another file for the hero section block `_hero-section.html.erb`
 4. Name your story "Home", so it connects to our previous code. The content type is "Page".
 5. Open your new story to start editing.
 6. On the right side, you can add new blocks to your page. Create a new block by clicking the "+ Add Block" button.
-7. This will open the Insert block section, then create the new "Hero Section" block by typing its name in the search input.
-8. Click the "Create new Hero Section" CTA 
-9. Add the "Headline" and "Subheadline" text fields to the new Hero Section and save.
+7. This will open the Insert block section, then create the new "hero_section" block by typing its name in the search input.
+8. Click the "Create new hero_section" CTA 
+9. Add the "headline" and "subheadline" text fields to the new Hero Section and save.
 10. In your new Hero Section block, add any text you want to it.
 11. Click the Publish button in the right top corner.
 
