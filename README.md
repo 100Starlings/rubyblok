@@ -203,6 +203,17 @@ Use this tag to render more than one component:
 <%= rubyblok_blocks_tag(blok.section_content) %>
 ```
 
+### Updating content manually at the caching layer
+
+You can do the following in case you need to update the caching layer with some content that already exists in Storyblok:
+```
+$ rails c
+page = <PAGE_NAME>
+storyblok_story_content = Rubyblok::Services::GetStoryblokStory.call(slug: page)
+<MODEL_NAME>.find_or_initialize_by(storyblok_story_slug: page)
+     .update(storyblok_story_content:, storyblok_story_id: storyblok_story_content["id"])
+```
+
 ## How to Run Tests
 
 You can run unit tests for RubyBlok with the following command:
