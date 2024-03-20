@@ -153,7 +153,8 @@ npm install local-ssl-proxy -g
 local-ssl-proxy --source 3333 --target 3000 --cert localhost.pem --key localhost-key.pem
 ```
 
-This will start a proxy server. Now, just go to the Storyblok Space and it will be working! 
+This will start a proxy server.
+
 By doing this initial setup, you are able to see your first Storyblok page inside your app and edit its content in the Storyblok admin interface 🎉
 
 
