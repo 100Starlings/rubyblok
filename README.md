@@ -69,22 +69,22 @@ resources :storyblok_webhook, only: :create
 ```
 The Storyblok webhook is responsible for updating and deleting content in our local database in case of changes of content in Storyblok.
 
-Finally, generate the pages controller:
+Finally, generate the home controller:
 ```bash
-rails g controller pages_controller
+rails g controller home_controller
 ```
-Add the following code to your pages controller:
+Add the following code to your home controller:
 ```
 def index
   response.headers['X-FRAME-OPTIONS'] = 'ALLOWALL'
 end
 ```
 
-Add this code to your app/views/pages/index.html.erb file:
+Add this code to your app/views/home/index.html.erb file:
 ```
 <%= rubyblok_story_tag('page') %>
 ```
-Configure your `routes.rb` file to call the pages controller.
+Configure your `routes.rb` file to call the home controller.
 
 Create a `shared/storyblok` directory in the `views` directory`, this directory is going to store the partials that render Storyblok components.
 You can change the folder settings at the `rubyblok.rb` file as needed:
@@ -113,16 +113,16 @@ And then create another file for the hero section block `_hero-section.html.erb`
 1. Once you're logged in, access your new space in the "My Spaces" section
 2. Go to the "Content" section
 3. Click the CTA "Create new" > Story
-4. Name your story "Page", so it connects to our previous code. The content type is "default page".
-5. Open your new page to start editing.
-6. On the right side, you can add new blocks to your page. Create a new block by clicking the plus button.
-7. This will open the Insert block section, then add the "Hero Section" block.
-8. Open your block and add any text you want to it.
-9. Click the Publish button in the right top corner.
+4. Name your story "Home", so it connects to our previous code. The content type is "Page".
+5. Open your new story to start editing.
+6. On the right side, you can add new blocks to your page. Create a new block by clicking the "+ Add Block" button.
+7. This will open the Insert block section, then create the new "Hero Section" block by typing its name in the search input.
+8. Click the "Create new Hero Section" CTA 
+9. Add the "Headline" and "Subheadline" text fields to the new Hero Section and save.
+10. In your new Hero Section block, add any text you want to it.
+11. Click the Publish button in the right top corner.
 
 Now you have your first demo page and block created. Start your rails server and you will be able to see it in your application.
-
-By doing this initial setup, you are able to see your first Storyblok page inside your app and edit its content in the Storyblok admin interface 🎉
 
 ### Activate the visual editor
 Here are the steps to configure the visual editor at Storyblok. This allows you to see a preview of your changes in the Storyblok interface as you edit and save.
@@ -151,7 +151,9 @@ npm install local-ssl-proxy -g
 local-ssl-proxy --source 3333 --target 3000 --cert localhost.pem --key localhost-key.pem
 ```
 
-This will start a proxy server. Now, just go to the Storyblok Space and it will be working! :tada:
+This will start a proxy server. Now, just go to the Storyblok Space and it will be working! 
+By doing this initial setup, you are able to see your first Storyblok page inside your app and edit its content in the Storyblok admin interface 🎉
+
 
 ## Rubyblok tags
 
