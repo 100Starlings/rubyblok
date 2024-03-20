@@ -147,3 +147,5 @@ RSpec/FilePath:
   Enabled: false
 RSpec/SpecFilePathFormat:
   Enabled: false
+Style/FetchEnvVar:
+  Enabled: false
