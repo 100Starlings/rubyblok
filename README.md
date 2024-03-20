@@ -20,6 +20,7 @@ In addition, Rubyblok provides an abstraction layer and stores all your content 
 Rubyblok 1.0 works with Rails 6.0 onwards. Run:
 ```
 bundle add rubyblok
+bundle add storyblok 
 ```
 
 
