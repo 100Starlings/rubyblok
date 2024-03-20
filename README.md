@@ -90,7 +90,7 @@ Configure your `routes.rb` file to call the home controller. For example, adding
 root to: 'home#index'
 ```
 
-Create a `shared/storyblok` directory in the `views` directory`, this directory is going to store the partials that render Storyblok components.
+Create a `shared/storyblok` directory in the `views` directory, this directory is going to store the partials that render Storyblok components.
 You can change the folder settings at the `rubyblok.rb` file as needed:
 ```
 config.component_path = "shared/storyblok"
