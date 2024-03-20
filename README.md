@@ -17,21 +17,11 @@ In addition, Rubyblok provides an abstraction layer and stores all your content 
 7. [License](#license)
 
 ## Installation
-
-To install Rubyblok, add the following line to your Gemfile and run bundle install:
+Rubyblok 1.0 works with Rails 6.0 onwards. Run:
 ```
-gem 'rubyblok'
-```
-
-Or install it manually:
-```
-gem install rubyblok
+bundle add rubyblok
 ```
 
-Or you can install a different branch by specifying the 'ref:' label in your Gemfile:
-```
-gem 'rubyblok', git: '<https://github.com/100Starlings/rubyblok>', ref: '2bb1059'
-```
 
 ### Storyblok account and variables
 
@@ -62,7 +52,7 @@ First, you need to run the install generator, which will create the initializer 
 rails g rubyblok:install
 ```
 
-Now let's generate and run a migration to create the `page` table:
+Now let's generate and run a migration to create the `pages` table and the `Page` model:
 ```bash
 rails g rubyblok:migration PAGE
 
@@ -73,7 +63,7 @@ Then, generate the webhook controller:
 ```bash
 rails g rubyblok:webhook_controller STORYBLOK_WEBHOOK
 ```
-Also add this code to your `routes.rb` file:
+It also adds this line to your `routes.rb` file:
 ```
 resources :storyblok_webhook, only: :create
 ```
@@ -85,22 +75,18 @@ rails g controller pages_controller
 ```
 Add the following code to your pages controller:
 ```
- include StoryblokHelper
-    def index
-        response.headers['X-FRAME-OPTIONS'] = 'ALLOWALL'
-        @slug = "page"
-        @page_content = GetStoryblokStory.call(slug: 'page').fetch('content')
-    end
+def index
+  response.headers['X-FRAME-OPTIONS'] = 'ALLOWALL'
+end
 ```
 
 Add this code to your app/views/pages/index.html.erb file:
 ```
-<%= rubyblok_story_tag(@slug) %>
+<%= rubyblok_story_tag('page') %>
 ```
 Configure your `routes.rb` file to call the pages controller.
 
-Create a `shared` directory in the `views` directory and a new folder named `storyblok` inside of it: `views/shared/storyblok`.
-This directory is going to store the partials that call Storyblok components.
+Create a `shared/storyblok` directory in the `views` directory`, this directory is going to store the partials that render Storyblok components.
 You can change the folder settings at the `rubyblok.rb` file as needed:
 ```
 config.component_path = "shared/storyblok"
@@ -170,17 +156,10 @@ This will start a proxy server. Now, just go to the Storyblok Space and it will 
 ## Rubyblok tags
 
 ### rubyblok_story_tag
-Use this tag to create pages:
+Use this tag to render stories:
 ```
 # Pages, e.g: views/pages/index.html.erb
-<%= rubyblok_story_tag(@slug) %>
-```
-
-### rubyblok_editable_tag
-Use this tag to create stories:
-```
-# Story, e.g: views/shared/storyblok/_story.rb
-<%= rubyblok_editable_tag(blok) %> #New Syntax
+<%= rubyblok_story_tag(slug) %>
 ```
 
 ### rubyblok_component_tag
@@ -193,30 +172,28 @@ It's not being used directly, but you can use it by passing a specific component
 ```
 
 ### rubyblok_content_tag
-The new syntax will identify which type of content you are trying to render (e.g., Markdown text or Rich Text).
+It renders content of Text, TextArea, Markdown or Richtext storyblok fields.
 ```
-#Content, e.g: views/shared/storyblok/_contact_section.html.erb
-<%= rubyblok_content_tag(blok.header) %> #New Syntax
+<%= rubyblok_content_tag(content) %>
 ```
 
-If you know which type of text you want to render, you can use these methods directly with `rubyblok_markdown_tag` or `rubyblok_richtext_tag`.
+Optionally, you can use these methods directly with `rubyblok_markdown_tag` or `rubyblok_richtext_tag`.
 ```
 # Markdown text
-blok = { "text" => "this is a **mark** down" }.to_dot
-
-<%= rubyblok_markdown_tag(blok.text) %>
-#Outuput: "<p>this is a <strong>mark</strong> down</p>"
+<%= rubyblok_markdown_tag("this is a **mark** down") %>
+#Output: "<p>this is a <strong>mark</strong> down</p>"
 
 # Richtext
-blok = { "type" => "doc",
-      "content" => [
-        { "type" => "paragraph",
-          "content" =>
-            [{ "text" => "this is a richtext",
-               "type" => "text" }]}]}.to_dot
+text = { 
+         "type" => "doc",
+         "content" => [
+           { "type" => "paragraph",
+             "content" => [{ "text" => "this is a richtext", "type" => "text" }]
+            }
+         ]
+       }
 
-<%= rubyblok_richtext_tag blok: blok > %>
-
+<%= rubyblok_richtext_tag text > %> 
 #Output: "<p>this is a richtext</p>"
 ```
 
