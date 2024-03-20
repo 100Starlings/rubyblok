@@ -85,7 +85,10 @@ Add this code to your app/views/home/index.html.erb file:
 ```
 <%= rubyblok_story_tag('home') %>
 ```
-Configure your `routes.rb` file to call the home controller.
+Configure your `routes.rb` file to call the home controller. For example, adding this line:
+```
+root to: 'home#index'
+```
 
 Create a `shared/storyblok` directory in the `views` directory`, this directory is going to store the partials that render Storyblok components.
 You can change the folder settings at the `rubyblok.rb` file as needed:
