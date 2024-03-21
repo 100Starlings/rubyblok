@@ -164,7 +164,7 @@ Use this tag to render stories:
 # Slug: full_slug of the storyblok story
 <%= rubyblok_story_tag(slug) %>
 ```
-The name of the storyblok blok should match the rails partial, ie the `header` storyblok blok should have a corresponding `_hreader.html.erb` partial in the `config.component_path` directory.
+The name of the storyblok blok should match the rails partial, ie the `header` storyblok blok should have a corresponding `_header.html.erb` partial in the `config.component_path` directory. The partial is called with a `blok` local variable which contains the storyblok blok properties.
 
 ### rubyblok_content_tag
 It renders content of Text, TextArea, Markdown or Richtext storyblok fields.
