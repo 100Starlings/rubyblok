@@ -20,9 +20,7 @@ In addition, Rubyblok provides an abstraction layer and stores all your content 
 Rubyblok 1.0 works with Rails 6.0 onwards. Run:
 ```
 bundle add rubyblok
-bundle add storyblok 
 ```
-
 
 ### Storyblok account and variables
 
@@ -163,18 +161,10 @@ By doing this initial setup, you are able to see your first Storyblok page insid
 ### rubyblok_story_tag
 Use this tag to render stories:
 ```
-# Pages, e.g: views/pages/index.html.erb
+# Slug: full_slug of the storyblok story
 <%= rubyblok_story_tag(slug) %>
 ```
-
-### rubyblok_component_tag
-It's not being used directly, but you can use it by passing a specific component to be rendered. By default, it uses 'blok.component' as a partial, but you can change this parameter, for example:
-```
-# As a simple component
-<%= rubyblok_component_tag blok: blok %>
-#Specifying the partial
-<%= rubyblok_component_tag blok: blok, partial: "section" %>
-```
+The name of the storyblok blok should match the rails partial, ie the `header` storyblok blok should have a corresponding `_hreader.html.erb` partial in the `config.component_path` directory.
 
 ### rubyblok_content_tag
 It renders content of Text, TextArea, Markdown or Richtext storyblok fields.
@@ -182,11 +172,11 @@ It renders content of Text, TextArea, Markdown or Richtext storyblok fields.
 <%= rubyblok_content_tag(content) %>
 ```
 
-Optionally, you can use these methods directly with `rubyblok_markdown_tag` or `rubyblok_richtext_tag`.
+Optionally, you can use the `rubyblok_markdown_tag` or `rubyblok_richtext_tag` tags for rendering specific content.
 ```
 # Markdown text
 <%= rubyblok_markdown_tag("this is a **mark** down") %>
-#Output: "<p>this is a <strong>mark</strong> down</p>"
+# Output: "<p>this is a <strong>mark</strong> down</p>"
 
 # Richtext
 text = { 
@@ -199,22 +189,21 @@ text = {
        }
 
 <%= rubyblok_richtext_tag text > %> 
-#Output: "<p>this is a richtext</p>"
+# Output: "<p>this is a richtext</p>"
 ```
 
 ### rubyblok_blocks_tag
 Use this tag to render more than one component:
 ```
-<%= rubyblok_blocks_tag(blok.section_content) %>
+<%= rubyblok_blocks_tag(blok.bloks) %>
 ```
 
 ### Updating content manually at the caching layer
 
 You can do the following in case you need to update the caching layer with some content that already exists in Storyblok:
 ```
-$ rails c
-page = <PAGE_NAME>
-storyblok_story_content = Rubyblok::Services::GetStoryblokStory.call(slug: page)
+# Slug: full_slug of the storyblok story
+storyblok_story_content = Rubyblok::Services::GetStoryblokStory.call(slug: slug)
 <MODEL_NAME>.find_or_initialize_by(storyblok_story_slug: page)
      .update(storyblok_story_content:, storyblok_story_id: storyblok_story_content["id"])
 ```
