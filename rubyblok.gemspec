@@ -6,9 +6,9 @@ Gem::Specification.new do |spec|
   spec.name = "rubyblok"
   spec.version = Rubyblok::VERSION
   spec.authors = ["100 Starlings"]
-  spec.email = ["info@100starlings.com"]
+  spec.email = ["rubyblok@100starlings.com"]
 
-  spec.summary = "This is a brief"
+  spec.summary = "Simple Storyblok CMS integration for Rails"
   spec.homepage = "http://www.rubyblok.com"
   spec.required_ruby_version = ">= 3.1.0"
 
