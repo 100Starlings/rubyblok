@@ -13,8 +13,6 @@ Gem::Specification.new do |spec|
   spec.homepage = "http://www.rubyblok.com"
   spec.required_ruby_version = ">= 3.1.0"
 
-  spec.metadata["allowed_push_host"] = "https://rubyblok.com"
-
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/100Starlings/rubyblok"
 
