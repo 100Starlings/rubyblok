@@ -24,7 +24,7 @@ bundle add rubyblok
 
 ### Storyblok account and variables
 
-[Click here](https://app.storyblok.com/?_gl=1*196uoul*_gcl_au*MTg1NjA5NjA0MS4xNzA5MDY5ODk3#!/signup) to create a free acount at Storyblok, the CMS platform where you will have access to the visual and real-time content editing.
+[Click here](https://app.storyblok.com/#/signup) to create a free acount at Storyblok, the CMS platform where you will have access to the visual and real-time content editing.
 
 Create a new Space, in _Spaces > Add Space_.
 
