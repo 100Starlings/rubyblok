@@ -53,14 +53,14 @@ rails g rubyblok:install
 
 Now let's generate and run a migration to create the `pages` table and the `Page` model:
 ```bash
-rails g rubyblok:migration PAGE
+rails g rubyblok:migration page
 
 rails db:migrate
 ```
 
 Then, generate the webhook controller:
 ```bash
-rails g rubyblok:webhook_controller STORYBLOK_WEBHOOK
+rails g rubyblok:webhook_controller storyblok_webhook
 ```
 It also adds this line to your `routes.rb` file:
 ```
