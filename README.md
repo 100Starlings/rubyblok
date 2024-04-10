@@ -200,7 +200,7 @@ Use this tag to render more than one component:
 
 ### Updating content manually at the caching layer
 
-You can do the following in case you need to update the caching layer with some content that already exists in Storyblok:
+In case you need to update the caching layer with new content added to Storyblok, run the following command:
 ```
 # Slug: full_slug of the storyblok story
 storyblok_story_content = Rubyblok::Services::GetStoryblokStory.call(slug: slug)
