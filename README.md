@@ -109,6 +109,11 @@ And then create another file for the hero section block `_hero_section.html.erb`
 </section>
 ```
 
+For this example, go to the `rubyblok.rb` file and turn the caching option off:
+```
+config.cached = false
+```
+
 ### Creating your page at Storyblok
 1. Once you're logged in, access your new space in the "My Spaces" section
 2. Go to the "Content" section
