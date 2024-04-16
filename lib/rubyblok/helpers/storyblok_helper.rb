@@ -37,6 +37,29 @@ module StoryblokHelper
     render_inline_partial template:, locals: { bloks: }
   end
 
+  def rubyblok_table_tag(blok)
+    template =
+    %{<table class="table">
+    <thead>
+      <tr>
+        <% blok.table.thead.each do |column_title| %>
+          <th><%= column_title.value %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% blok.table.tbody.each do |row| %>
+        <tr>
+          <% row.body.each_with_index do |cell, index| %>
+            <td><%= cell.value %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+    </table>}
+    render_inline_partial template:, locals: { blok: blok}
+  end
+
   def get_story(slug)
     if use_cache?
       get_story_via_cache(slug)["content"].to_dot
