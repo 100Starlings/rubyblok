@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Rubyblok::Generators::HelloWorldGenerator do
   include GeneratorSpec::TestCase
 
-  let(:space_id) { rand(1...99_999) }
+  # let(:space_id) { rand(1...99_999) }
 
   tests(described_class)
   destination(File.join(Dir.tmpdir, "files"))
@@ -12,23 +12,22 @@ RSpec.describe Rubyblok::Generators::HelloWorldGenerator do
 
   context "when executing the hello world generator" do
     before do
-      stub_const("ENV", { "STORYBLOK_API_TOKEN" => "token", "STORYBLOK_API_TOKEN_OAUTH" => "token" })
+      FileUtils.mkdir_p(File.join(destination_root, "config"))
+      File.write(File.join(destination_root, "config/routes.rb"), "Rails.application.routes.draw do\nend\n")
 
-      allow(Rubyblok.configuration)
-        .to(receive_messages(api_token: "API token", version: "version", component_path: "shared/storyblok"))
-
-      stub_request(:get, %r{api.storyblok.com/v1/spaces/#{space_id}/components/hello_world})
-        .to_return(status: 404)
-      stub_request(:get, %r{api.storyblok.com/v2/cdn/stories/hello-world})
-        .to_return(status: 404)
+      allow(Rubyblok.configuration).to(receive_messages(model_name: "Page", component_path: "shared/storyblok"))
     end
 
     it "should create the partial file and storyblok component and story" do
-      expect_any_instance_of(Storyblok::Client).to(receive(:post).twice)
+      run_generator
 
-      run_generator([space_id])
-
-      assert_file("app/views/shared/storyblok/_hello_world.html.erb")
+      assert_file("app/controllers/pages_controller.rb")
+      assert_file("app/views/pages/index.html.erb")
+      assert_file("app/views/shared/storyblok/_feature.html.erb")
+      assert_file("app/views/shared/storyblok/_page.html.erb")
+      assert_file("app/views/shared/storyblok/_grid.html.erb")
+      assert_file("app/views/shared/storyblok/_teaser.html.erb")
+      assert_file("app/assets/stylesheets/hello.css")
     end
   end
 end

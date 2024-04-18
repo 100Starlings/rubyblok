@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+class <%= plural_model_name %>Controller < ApplicationController
+  include StoryblokHelper
+
+  def index
+    @slug = params[:page]
+  end
+end
