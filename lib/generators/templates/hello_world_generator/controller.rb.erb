@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class <%= plural_model_name %>Controller < ApplicationController
+class <%= class_name.pluralize %>Controller < ApplicationController
   include StoryblokHelper
 
   def index
-    @slug = params[:page]
+    @slug = "home"
   end
 end

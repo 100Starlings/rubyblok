@@ -3,7 +3,8 @@ require "spec_helper"
 RSpec.describe Rubyblok::Generators::HelloWorldGenerator do
   include GeneratorSpec::TestCase
 
-  # let(:space_id) { rand(1...99_999) }
+  let(:name) { "page_object" }
+  let(:plural_name) { name.pluralize }
 
   tests(described_class)
   destination(File.join(Dir.tmpdir, "files"))
@@ -19,10 +20,10 @@ RSpec.describe Rubyblok::Generators::HelloWorldGenerator do
     end
 
     it "should create the partial file and storyblok component and story" do
-      run_generator
+      run_generator([name])
 
-      assert_file("app/controllers/pages_controller.rb")
-      assert_file("app/views/pages/index.html.erb")
+      assert_file("app/controllers/#{plural_name}_controller.rb")
+      assert_file("app/views/#{plural_name}/index.html.erb")
       assert_file("app/views/shared/storyblok/_feature.html.erb")
       assert_file("app/views/shared/storyblok/_page.html.erb")
       assert_file("app/views/shared/storyblok/_grid.html.erb")
