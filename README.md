@@ -22,11 +22,10 @@ Rubyblok 1.0 works with Rails 6.0 onwards. Run:
 bundle add rubyblok
 ```
 
-### Storyblok account and variables
-
+### Storyblok account and new space
 [Click here](https://app.storyblok.com/#/signup) to create a free acount at Storyblok, the CMS platform where you will have access to the visual and real-time content editing.
 
-Create a new Space, in _Spaces > Add Space_.
+Create a new Space, in _My Spaces > Add Space_. Select the free Community plan by clicking its "Continue" button and give your space a name.
 
 Get your Storyblok API token in your account, at _Storyblok Space > Settings > Access tokens_ page. Copy the "Preview" access level key.
 
@@ -43,93 +42,36 @@ STORYBLOK_WEBHOOK_SECRET=''
 
 ## Getting Started
 
-### Your first Rubyblok page
-Let's get started with Rubyblok by creating our first page.
+### Hello world - Your first Rubyblok page
+Let's get started with Rubyblok by creating your first page in three steps.
+Note that it is important that you have your Storyblok space set up as described above, in the `Storyblok account and new space` section.
 
-First, you need to run the install generator, which will create the initializer for you:
+1. First, you need to run the install generator, which will create the initializer for you:
 ```bash
 rails g rubyblok:install
 ```
 
-Now let's generate and run a migration to create the `pages` table and the `Page` model:
+2. Now let's generate and run a migration to create the `pages` table and the `Page` model:
 ```bash
 rails g rubyblok:migration page
 
 rails db:migrate
 ```
 
-Then, generate the webhook controller:
+3. Finally, let's generate your first page:
 ```bash
-rails g rubyblok:webhook_controller storyblok_webhook
+rails g rubyblok:hello_world page
 ```
-It also adds this line to your `routes.rb` file:
-```
-resources :storyblok_webhook, only: :create
-```
-The Storyblok webhook is responsible for updating and deleting content in our local database in case of changes of content in Storyblok.
-
-Finally, generate the home controller:
-```bash
-rails g controller home_controller
-```
-Add the following code to your home controller:
-```
-def index
-  response.headers['X-FRAME-OPTIONS'] = 'ALLOWALL'
-end
-```
-
-Add this code to your app/views/home/index.html.erb file:
-```
-<%= rubyblok_story_tag('home') %>
-```
-Configure your `routes.rb` file to call the home controller. For example, adding this line:
-```
-root to: 'home#index'
-```
-
-Create a `shared/storyblok` directory in the `views` directory, this directory is going to store the partials that render Storyblok components.
-You can change the folder settings at the `rubyblok.rb` file as needed:
-```
-config.component_path = "shared/storyblok"
-```
-
-Inside the `views/shared/storyblok` folder, create a file named `_page.html.erb` with the following code:
-```
-<%= rubyblok_blocks_tag(blok.body) %>
-```
-
-And then create another file for the hero section block `_hero_section.html.erb` (more explanation on that later):
-```
-<section>
-  <div>
-    <%= rubyblok_content_tag(blok.headline) %>
-    <%= rubyblok_content_tag(blok.subheadline) %>
-  </div>
-</section>
-```
+This will automatically create a new route, controller, views and styling for your hello world page.
 
 For this example, go to the `rubyblok.rb` file and turn the caching option off:
 ```
 config.cached = false
 ```
 
-### Creating your page at Storyblok
-1. Once you're logged in, access your new space in the "My Spaces" section
-2. Go to the "Content" section
-3. Click the CTA "Create new" > Story
-4. Name your story "Home", so it connects to our previous code. The content type is "Page".
-5. Open your new story to start editing.
-6. On the right side, you can add new blocks to your page. Create a new block by clicking the "+ Add Block" button.
-7. This will open the Insert block section, then create the new "hero_section" block by typing its name in the search input.
-8. Click the "Create new hero_section" CTA 
-9. Add the "headline" and "subheadline" text fields to the new Hero Section and save.
-10. In your new Hero Section block, add any text you want to it.
-11. Click the Publish button in the right top corner.
+Now you have created your first Hello World page! Start your Rails server and you will be able to see it in your localhost.
 
-Now you have your first demo page and block created. Start your rails server and you will be able to see it in your application.
-
-### Activate the visual editor
+### Activate the visual editor 
 Here are the steps to configure the visual editor at Storyblok. This allows you to see a preview of your changes in the Storyblok interface as you edit and save.
 
 At Storyblok, select your Space and go to _Settings > Visual Editor_. 
@@ -160,6 +102,13 @@ This will start a proxy server.
 
 By doing this initial setup, you are able to see your first Storyblok page inside your app and edit its content in the Storyblok admin interface 🎉
 
+### Storyblok webhook
+The Storyblok webhook will be responsible for updating and deleting content in the local database in case of changes. [Learn more here.](https://www.storyblok.com/docs/guide/in-depth/webhooks)
+
+Generate the webhook controller:
+```bash
+rails g rubyblok:webhook_controller storyblok_webhook
+```
 
 ## Rubyblok tags
 
@@ -204,7 +153,6 @@ Use this tag to render more than one component:
 ```
 
 ### Updating content manually at the caching layer
-
 In case you need to update the caching layer with new content added to Storyblok, run the following command:
 ```
 # Slug: full_slug of the storyblok story
@@ -214,7 +162,6 @@ storyblok_story_content = Rubyblok::Services::GetStoryblokStory.call(slug: slug)
 ```
 
 ## How to Run Tests
-
 You can run unit tests for RubyBlok with the following command:
 ```
 bundle exec rspec
@@ -228,5 +175,4 @@ Issues should be used to report bugs, request a new feature, or to discuss poten
 For any inquiries, reach out to us at: info@rubyblok.com
 
 ## License
-
 RubyBlok is released under the MIT License.
