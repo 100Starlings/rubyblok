@@ -69,7 +69,7 @@ For this example, go to the `rubyblok.rb` file and turn the caching option off:
 config.cached = false
 ```
 
-Now you have created your first Hello World page! Start your Rails server and you will be able to see it in your localhost.
+Now you have created your first Hello World page! Start your Rails server, access the '/pages' route and you will be able to see the page.
 
 ### Activate the visual editor 
 Here are the steps to configure the visual editor at Storyblok. This allows you to see a preview of your changes in the Storyblok interface as you edit and save.
