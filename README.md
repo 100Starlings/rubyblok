@@ -18,7 +18,7 @@ In addition, Rubyblok provides an abstraction layer and stores all your content 
 
 ## Installation
 Rubyblok 1.0 works with Rails 6.0 onwards. Run:
-```
+```bash
 bundle add rubyblok
 ```
 
@@ -41,6 +41,15 @@ STORYBLOK_WEBHOOK_SECRET=''
 ```
 
 ## Getting Started
+
+### Necessary gems
+You need to add some gems to your app for Rubyblok to work correctly. Run the following commands:
+
+```bash
+bundle add "storyblok"
+bundle add "hash_dot"
+bundle add "dotenv-rails"
+```
 
 ### Hello world - Your first Rubyblok page
 Let's get started with Rubyblok by creating your first page in three steps.
