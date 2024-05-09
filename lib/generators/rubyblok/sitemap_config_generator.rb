@@ -9,7 +9,7 @@ module Rubyblok
 
       def generate_sitemap_config
         copy_config
-        add_sitemap_gem
+        add_sitemap_generator_gem
       end
 
       private
@@ -18,10 +18,20 @@ module Rubyblok
         template("sitemap.rb.erb", "config/sitemap.rb")
       end
 
-      def add_sitemap_gem
-        append_to_file "Gemfile" do
-          "gem 'sitemap_generator'"
-        end
+      def add_sitemap_generator_gem
+        append_to_file(gemfile_path) { "gem 'sitemap_generator'" } if add_sitemap_generator_gem?
+      end
+
+      def add_sitemap_generator_gem?
+        !gemfile_content.match?(/\bsitemap_generator\b/)
+      end
+
+      def gemfile_content
+        File.read(gemfile_path)
+      end
+
+      def gemfile_path
+        Rails.root.join("Gemfile")
       end
     end
   end
