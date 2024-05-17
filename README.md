@@ -11,10 +11,11 @@ In addition, Rubyblok provides an abstraction layer and stores all your content 
 1. [Installation](#installation)
 2. [Getting Started](#getting-started)
 3. [Rubyblok tags](#rubyblok-tags)
-4. [How to Run Tests](#how-to-run-tests)
-5. [Guide for Contributing](#guide-for-contributing)
-6. [How to Contact Us](#how-to-contact-us)
-7. [License](#license)
+4. [Sitemap configuration](#sitemap-configuration)
+5. [How to Run Tests](#how-to-run-tests)
+6. [Guide for Contributing](#guide-for-contributing)
+7. [How to Contact Us](#how-to-contact-us)
+8. [License](#license)
 
 ## Installation
 Rubyblok 1.0 works with Rails 6.0 onwards. Run:
@@ -169,6 +170,33 @@ storyblok_story_content = Rubyblok::Services::GetStoryblokStory.call(slug: slug)
 <MODEL_NAME>.find_or_initialize_by(storyblok_story_slug: page)
      .update(storyblok_story_content:, storyblok_story_id: storyblok_story_content["id"])
 ```
+
+## Sitemap configuration
+You can generate a sitemap configuration for your website with the following command:
+```
+rails g rubyblok:sitemap_config
+```
+This generator will create a sitemap configuration for the `sitemap_generator` gem and add the gem to your Gemfile in case it's not already there.
+The sitemap is generated only for cached content. Please make sure that the `cached` configuration value is `true` on `config/initializers/rubyblok.rb`.
+Open `config/sitemap.rb` and add your hostname:
+```
+# ...
+
+# TODO: Configure your hostname here
+SitemapGenerator::Sitemap.default_host = ''
+
+# ...
+```
+For example:
+```
+# ...
+
+# TODO: Configure your hostname here
+SitemapGenerator::Sitemap.default_host = 'https://myhost.com'
+
+# ...
+```
+In order to generate your sitemap or customize this configuration, please read [the sitemap_generator gem documentation](https://github.com/kjvarga/sitemap_generator).
 
 ## How to Run Tests
 You can run unit tests for RubyBlok with the following command:
