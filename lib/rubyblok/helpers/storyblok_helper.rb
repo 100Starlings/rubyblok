@@ -48,11 +48,21 @@ module StoryblokHelper
   private
 
   def get_story_via_api(slug)
-    Rubyblok::Services::GetStoryblokStory.call(slug:)
+    storyblok_story = Rubyblok::Services::GetStoryblokStory.call(slug:)
+    storyblok_story.tap do |story|
+      if cached?
+        model_instance = model_class.find_or_initialize_by(storyblok_story_id: story["id"])
+        model_instance.update(storyblok_story_content: story, storyblok_story_slug: story["full_slug"])
+      end
+    end
   end
 
   def get_story_via_cache(slug)
-    Rubyblok.configuration.model_name.classify.constantize.fetch_content(slug)
+    model_class.fetch_content(slug)
+  end
+
+  def model_class
+    Rubyblok.configuration.model_name.classify.constantize
   end
 
   def rich_text_renderer # rubocop:disable Metrics/MethodLength
@@ -92,6 +102,20 @@ module StoryblokHelper
   end
 
   def use_cache?
-    Rubyblok.configuration.cached
+    return false unless cached?
+
+    !auto_update? && !update_storyblok?
+  end
+
+  def cached?
+    @cached ||= Rubyblok.configuration.cached
+  end
+
+  def auto_update?
+    @auto_update ||= Rubyblok.configuration.auto_update
+  end
+
+  def update_storyblok?
+    !Rails.env.production? && params[:storyblok] == "update"
   end
 end
