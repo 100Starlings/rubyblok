@@ -4,6 +4,7 @@ require "storyblok"
 require "redcarpet"
 require "hash_dot"
 
+require_relative "rubyblok/mixins/cacheable_storyblok_image"
 require_relative "rubyblok/helpers/storyblok_helper"
 require_relative "rubyblok/version"
 require_relative "rubyblok/configuration"

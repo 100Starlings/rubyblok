@@ -1,4 +1,6 @@
 module StoryblokHelper
+  include Rubyblok::Mixins::CacheableStoryblokImage
+
   def rubyblok_content_tag(content)
     return if content.blank?
 
@@ -49,12 +51,17 @@ module StoryblokHelper
 
   def get_story_via_api(slug)
     storyblok_story = Rubyblok::Services::GetStoryblokStory.call(slug:)
+    storyblok_story = with_cached_images(storyblok_story) if use_cdn_images?
     storyblok_story.tap do |story|
       if cached?
         model_instance = model_class.find_or_initialize_by(storyblok_story_id: story["id"])
         model_instance.update(storyblok_story_content: story, storyblok_story_slug: story["full_slug"])
       end
     end
+  end
+
+  def use_cdn_images?
+    Rubyblok.configuration.cdn_images
   end
 
   def get_story_via_cache(slug)
