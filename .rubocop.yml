@@ -4,6 +4,7 @@ require:
 
 AllCops:
   NewCops: enable
+  TargetRubyVersion: 3.1.X
 
 Documentation:
   Enabled: false
