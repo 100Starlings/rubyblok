@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyblok
   module Services
     class GetStoryblokStory
@@ -15,15 +17,15 @@ module Rubyblok
 
       private
 
-      def storyblok_client(version: "draft") # rubocop:disable Lint/UnusedMethodArgument
+      def storyblok_client
         Storyblok::Client.new(
           token: Rubyblok.configuration.api_token,
           version: Rubyblok.configuration.version
         )
       end
 
-      def get_story
-        storyblok_client.story(@slug)["data"]["story"]
+      def get_story # rubocop:disable Naming/AccessorMethodName
+        storyblok_client.story(@slug)['data']['story']
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module StoryblokHelper
   def rubyblok_content_tag(content)
     return if content.blank?
@@ -39,9 +41,9 @@ module StoryblokHelper
 
   def get_story(slug)
     if use_cache?
-      get_story_via_cache(slug)["content"].to_dot
+      get_story_via_cache(slug)['content'].to_dot
     else
-      get_story_via_api(slug)["content"].to_dot
+      get_story_via_api(slug)['content'].to_dot
     end
   end
 
@@ -55,16 +57,13 @@ module StoryblokHelper
     Rubyblok.configuration.model_name.classify.constantize.fetch_content(slug)
   end
 
-  def rich_text_renderer # rubocop:disable Metrics/MethodLength
+  def rich_text_renderer
     ctx = {}
     path = component_path
     @rich_text_renderer ||=
       Storyblok::Richtext::HtmlRenderer.new.tap do |html_renderer|
         html_renderer.set_component_resolver(lambda { |component, data|
-          ApplicationController.render(
-            partial: "#{path}/#{component}",
-            locals: ctx.merge(blok: data)
-          )
+          ApplicationController.render(partial: "#{path}/#{component}", locals: ctx.merge(blok: data))
         })
       end
   end
@@ -75,7 +74,7 @@ module StoryblokHelper
 
   # rubocop:disable Rails/OutputSafety
   def rubyblok_editable_tag(component)
-    component["_editable"]&.html_safe
+    component['_editable']&.html_safe
   end
   # rubocop:enable Rails/OutputSafety
 

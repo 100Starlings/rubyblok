@@ -1,19 +1,21 @@
-require "rails/generators"
-require "rails/generators/active_record"
+# frozen_string_literal: true
+
+require 'rails/generators'
+require 'rails/generators/active_record'
 
 module Rubyblok
   module Generators
     class MigrationGenerator < ::Rails::Generators::NamedBase
       include ::Rails::Generators::Migration
-      source_root File.expand_path("../templates", __dir__)
-      desc "Installs Rubyblok migration and model files."
+      source_root File.expand_path('../templates', __dir__)
+      desc 'Installs Rubyblok migration and model files.'
 
       def install
         if table_exist?
-          migration_template("migration_update.rb.erb", "db/migrate/update_rubyblok_#{plural_file_name}.rb",
+          migration_template('migration_update.rb.erb', "db/migrate/update_rubyblok_#{plural_file_name}.rb",
                              migration_version:)
         else
-          migration_template("migration_create.rb.erb", "db/migrate/create_rubyblok_#{plural_file_name}.rb",
+          migration_template('migration_create.rb.erb', "db/migrate/create_rubyblok_#{plural_file_name}.rb",
                              migration_version:)
         end
 
@@ -53,11 +55,11 @@ module Rubyblok
       end
 
       def generate_new_model_from_template
-        template("model.rb.erb", "app/models/#{file_name}.rb")
+        template('model.rb.erb', "app/models/#{file_name}.rb")
       end
 
       def add_model_name_to_config
-        model_path = "config/initializers/rubyblok.rb"
+        model_path = 'config/initializers/rubyblok.rb'
         insert_into_file model_path, after: 'config.model_name     = "' do
           class_name
         end
