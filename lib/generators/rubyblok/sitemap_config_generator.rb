@@ -1,11 +1,13 @@
-require "rails/generators"
+# frozen_string_literal: true
+
+require 'rails/generators'
 
 module Rubyblok
   module Generators
     class SitemapConfigGenerator < Rails::Generators::Base
-      source_root File.expand_path("../templates", __dir__)
+      source_root File.expand_path('../templates', __dir__)
 
-      desc "Generates a configuration for the sitemap_generator gem"
+      desc 'Generates a configuration for the sitemap_generator gem'
 
       def generate_sitemap_config
         copy_config
@@ -15,7 +17,7 @@ module Rubyblok
       private
 
       def copy_config
-        template("sitemap.rb.erb", "config/sitemap.rb")
+        template('sitemap.rb.erb', 'config/sitemap.rb')
       end
 
       def add_sitemap_generator_gem
@@ -31,7 +33,7 @@ module Rubyblok
       end
 
       def gemfile_path
-        Rails.root.join("Gemfile")
+        Rails.root.join('Gemfile')
       end
     end
   end
