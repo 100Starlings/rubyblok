@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+require 'sitemap_generator'
+
+# TODO: Configure your hostname here
+SitemapGenerator::Sitemap.default_host = ''
+
+if Rubyblok.configuration.cached
+  SitemapGenerator::Sitemap.create do
+    model = Rubyblok.configuration.model_name.classify.constantize
+    pages = model.all.select { |page| page.storyblok_story_content.dig('content', 'no_index') == false }
+    pages.each { |page| add(page.storyblok_story_slug, lastmod: page.updated_at) }
+  end
+end

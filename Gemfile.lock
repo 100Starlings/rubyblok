@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubyblok (1.0.0)
+    rubyblok (1.1.0)
       aws-sdk-s3 (~> 1.151.0)
       hash_dot (~> 2.5)
       httparty (~> 0.22.0)

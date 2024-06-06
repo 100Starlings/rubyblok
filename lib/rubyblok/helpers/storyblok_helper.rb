@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module StoryblokHelper
   include Rubyblok::Mixins::CacheableStoryblokImage
 
@@ -40,10 +42,10 @@ module StoryblokHelper
   end
 
   def get_story(slug)
-    return get_story_via_api(slug)["content"].to_dot unless cached?
+    return get_story_via_api(slug)['content'].to_dot unless cached?
 
     if update_storyblok?
-      get_story_via_api(slug, save: true)["content"].to_dot
+      get_story_via_api(slug, save: true)['content'].to_dot
     else
       get_story_via_cache(slug).to_dot
     end
@@ -66,16 +68,13 @@ module StoryblokHelper
     Rubyblok.configuration.model_name.classify.constantize
   end
 
-  def rich_text_renderer # rubocop:disable Metrics/MethodLength
+  def rich_text_renderer
     ctx = {}
     path = component_path
     @rich_text_renderer ||=
       Storyblok::Richtext::HtmlRenderer.new.tap do |html_renderer|
         html_renderer.set_component_resolver(lambda { |component, data|
-          ApplicationController.render(
-            partial: "#{path}/#{component}",
-            locals: ctx.merge(blok: data)
-          )
+          ApplicationController.render(partial: "#{path}/#{component}", locals: ctx.merge(blok: data))
         })
       end
   end
@@ -86,7 +85,7 @@ module StoryblokHelper
 
   # rubocop:disable Rails/OutputSafety
   def rubyblok_editable_tag(component)
-    component["_editable"]&.html_safe
+    component['_editable']&.html_safe
   end
   # rubocop:enable Rails/OutputSafety
 
@@ -115,6 +114,6 @@ module StoryblokHelper
   end
 
   def update_storyblok?
-    auto_update? || params[:storyblok] == "update"
+    auto_update? || params[:storyblok] == 'update'
   end
 end
