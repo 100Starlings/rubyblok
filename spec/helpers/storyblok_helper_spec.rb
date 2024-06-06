@@ -5,9 +5,9 @@ require "spec_helper"
 RSpec.describe StoryblokHelper do
   let!(:storyblok_helper) { Object.new.extend(StoryblokHelper) }
 
-  let(:api_token)      { "api_token" }
-  let(:version)        { "version" }
   let(:component_path) { "shared" }
+  let(:cached) { false }
+  let(:auto_update) { false }
 
   let(:richtext_content) do
     { "type" => "doc",
@@ -20,8 +20,12 @@ RSpec.describe StoryblokHelper do
   end
 
   before do
-    allow(Rubyblok.configuration).to receive_messages(api_token:, version:,
-                                                      component_path:)
+    allow(Rubyblok.configuration).to receive_messages(
+      component_path:,
+      model_name: "PageObject",
+      cached:,
+      auto_update:
+    )
   end
 
   describe "#rubyblok_content_tag" do
@@ -199,10 +203,11 @@ RSpec.describe StoryblokHelper do
           "component" => "page",
         },
         "schema" => "page",
-      }.to_dot
+      }
     end
 
     before do
+      allow(Rubyblok.configuration).to receive(:cached).and_return(false)
       allow(Rubyblok::Services::GetStoryblokStory).to receive(:call).and_return(story_data)
     end
 
@@ -232,6 +237,78 @@ RSpec.describe StoryblokHelper do
     it "returns the right view" do
       result = storyblok_helper.rubyblok_blocks_tag(component_object.cta_buttons)
       expect(result.squish).to eq("<a> Try for free </a> <a> Discover more </a>")
+    end
+  end
+
+  describe "#get_story" do
+    subject(:get_story) { storyblok_helper.get_story(slug) }
+
+    let(:slug) { "Home" }
+    let(:story) { JSON.parse(File.read("spec/support/home.json")) }
+
+    before do
+      allow(Rubyblok::Services::GetStoryblokStory).to receive(:call).with(slug:).and_return(story)
+      allow(storyblok_helper).to receive(:params).and_return({})
+    end
+
+    context "when non cached" do
+      it "calls the API" do
+        get_story
+        expect(Rubyblok::Services::GetStoryblokStory).to have_received(:call).with(slug:)
+      end
+
+      it "returns the content" do
+        expect(get_story).to eq(story["content"])
+      end
+
+      it "does not cache the content" do
+        get_story
+        expect(PageObject.count).to eq(0)
+      end
+    end
+
+    context "when cached but not auto update" do
+      let(:cached) { true }
+      let(:auto_update) { false }
+
+      let!(:page_object) do
+        PageObject.create(
+          storyblok_story_id: story["id"],
+          storyblok_story_slug: slug,
+          storyblok_story_content: story["content"]
+        )
+      end
+
+      it "does not call the API" do
+        get_story
+        expect(Rubyblok::Services::GetStoryblokStory).not_to have_received(:call).with(slug:)
+      end
+
+      it "returns the content" do
+        expect(get_story).to eq(story["content"])
+      end
+    end
+
+    context "when cached and auto update" do
+      let(:cached) { true }
+      let(:auto_update) { true }
+
+      it "calls the API" do
+        get_story
+        expect(Rubyblok::Services::GetStoryblokStory).to have_received(:call).with(slug:)
+      end
+
+      it "returns the content" do
+        expect(get_story).to eq(story["content"])
+      end
+
+      it "creates the page object" do
+        get_story
+        expect(PageObject.find_by(storyblok_story_slug: story["full_slug"])).to have_attributes(
+          storyblok_story_id: story["id"].to_s,
+          storyblok_story_content: story
+        )
+      end
     end
   end
 end

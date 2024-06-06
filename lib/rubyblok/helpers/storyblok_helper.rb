@@ -40,28 +40,22 @@ module StoryblokHelper
   end
 
   def get_story(slug)
-    if use_cache?
-      get_story_via_cache(slug)["content"].to_dot
+    return get_story_via_api(slug)["content"].to_dot unless cached?
+
+    if update_storyblok?
+      get_story_via_api(slug, save: true)["content"].to_dot
     else
-      get_story_via_api(slug)["content"].to_dot
+      get_story_via_cache(slug).to_dot
     end
   end
 
   private
 
-  def get_story_via_api(slug)
+  def get_story_via_api(slug, save: false)
     storyblok_story = Rubyblok::Services::GetStoryblokStory.call(slug:)
     storyblok_story = with_cached_images(storyblok_story) if use_cdn_images?
-    storyblok_story.tap do |story|
-      if cached?
-        model_instance = model_class.find_or_initialize_by(storyblok_story_id: story["id"])
-        model_instance.update(storyblok_story_content: story, storyblok_story_slug: story["full_slug"])
-      end
-    end
-  end
-
-  def use_cdn_images?
-    Rubyblok.configuration.cdn_images
+    model_class.find_or_create(storyblok_story) if save
+    storyblok_story
   end
 
   def get_story_via_cache(slug)
@@ -108,21 +102,19 @@ module StoryblokHelper
     ApplicationController.render inline: template, locals:
   end
 
-  def use_cache?
-    return false unless cached?
-
-    !auto_update? && !update_storyblok?
+  def use_cdn_images?
+    Rubyblok.configuration.cdn_images
   end
 
   def cached?
-    @cached ||= Rubyblok.configuration.cached
+    Rubyblok.configuration.cached
   end
 
   def auto_update?
-    @auto_update ||= Rubyblok.configuration.auto_update
+    Rubyblok.configuration.auto_update
   end
 
   def update_storyblok?
-    !Rails.env.production? && params[:storyblok] == "update"
+    auto_update? || params[:storyblok] == "update"
   end
 end

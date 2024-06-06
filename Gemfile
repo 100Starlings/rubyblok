@@ -12,6 +12,7 @@ group :development, :test do
   gem "pry"
   gem "rails"
   gem "rspec"
+  gem "sqlite3", "~> 1.4"
   gem "webmock"
 
   gem "generator_spec"
