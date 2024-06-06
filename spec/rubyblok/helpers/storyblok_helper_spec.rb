@@ -5,6 +5,9 @@ require 'spec_helper'
 RSpec.describe StoryblokHelper do
   let!(:storyblok_helper) { Object.new.extend(described_class) }
 
+  let(:cached) { false }
+  let(:auto_update) { false }
+
   let(:richtext_content) do
     { 'type' => 'doc',
       'content' => [
@@ -16,8 +19,12 @@ RSpec.describe StoryblokHelper do
   end
 
   before do
-    allow(Rubyblok.configuration).to receive_messages(api_token: 'api_token', version: 'version',
-                                                      component_path: 'shared')
+    allow(Rubyblok.configuration).to receive_messages(
+      component_path: 'shared',
+      model_name: 'PageObject',
+      cached:,
+      auto_update:
+    )
   end
 
   describe '#rubyblok_content_tag' do
@@ -60,13 +67,11 @@ RSpec.describe StoryblokHelper do
 
   describe '#rubyblok_component_tag' do
     context 'when is a simple component' do
-      let(:editable) { "<!--#storyblok\#{\"name\": \"editable_name\"}-->" }
-
       let(:component_object) do
         {
           'component' => 'page',
           'title' => 'homepage',
-          '_editable' => editable
+          '_editable' => "<!--#storyblok\#{\"name\": \"editable_name\"}-->"
         }.to_dot
       end
 
@@ -96,15 +101,13 @@ RSpec.describe StoryblokHelper do
     end
 
     context 'when the partial is present' do
-      let(:partial) { 'section' }
-
       let(:component_object) do
         { 'component' => 'page',
           'text' => 'hello' }.to_dot
       end
 
       it 'render the right partial' do
-        result = storyblok_helper.rubyblok_component_tag(blok: component_object, partial:)
+        result = storyblok_helper.rubyblok_component_tag(blok: component_object, partial: 'section')
 
         expect(result.squish).to eq('<aside> hello </aside>')
       end
@@ -186,7 +189,6 @@ RSpec.describe StoryblokHelper do
   end
 
   describe '#rubyblok_story_tag' do
-    let(:slug) { 'Home' }
     let(:story_data) do
       {
         'name' => 'Home',
@@ -195,15 +197,16 @@ RSpec.describe StoryblokHelper do
           'component' => 'page'
         },
         'schema' => 'page'
-      }.to_dot
+      }
     end
 
     before do
+      allow(Rubyblok.configuration).to receive(:cached).and_return(false)
       allow(Rubyblok::Services::GetStoryblokStory).to receive(:call).and_return(story_data)
     end
 
     it 'returns the right view' do
-      result = storyblok_helper.rubyblok_story_tag(slug)
+      result = storyblok_helper.rubyblok_story_tag('Home')
       expect(result.squish).to eq('<head> homepage </head>')
     end
   end
@@ -228,6 +231,77 @@ RSpec.describe StoryblokHelper do
     it 'returns the right view' do
       result = storyblok_helper.rubyblok_blocks_tag(component_object.cta_buttons)
       expect(result.squish).to eq('<a> Try for free </a> <a> Discover more </a>')
+    end
+  end
+
+  describe '#get_story' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    subject(:get_story) { storyblok_helper.get_story(slug) }
+
+    let(:slug) { 'Home' }
+    let(:story) { JSON.parse(File.read('spec/support/home.json')) }
+
+    before do
+      allow(Rubyblok::Services::GetStoryblokStory).to receive(:call).with(slug:).and_return(story)
+      allow(storyblok_helper).to receive(:params).and_return({})
+    end
+
+    context 'when non cached' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      it 'calls the API' do
+        get_story
+        expect(Rubyblok::Services::GetStoryblokStory).to have_received(:call).with(slug:)
+      end
+
+      it 'returns the content' do
+        expect(get_story).to eq(story['content'])
+      end
+
+      it 'does not cache the content' do
+        get_story
+        expect(PageObject.count).to eq(0)
+      end
+    end
+
+    context 'when cached but not auto update' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      let(:cached) { true }
+
+      before do
+        PageObject.create(
+          storyblok_story_id: story['id'],
+          storyblok_story_slug: slug,
+          storyblok_story_content: story
+        )
+      end
+
+      it 'does not call the API' do
+        get_story
+        expect(Rubyblok::Services::GetStoryblokStory).not_to have_received(:call).with(slug:)
+      end
+
+      it 'returns the content' do
+        expect(get_story).to eq(story['content'])
+      end
+    end
+
+    context 'when cached and auto update' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      let(:cached) { true }
+      let(:auto_update) { true }
+
+      it 'calls the API' do
+        get_story
+        expect(Rubyblok::Services::GetStoryblokStory).to have_received(:call).with(slug:)
+      end
+
+      it 'returns the content' do
+        expect(get_story).to eq(story['content'])
+      end
+
+      it 'creates the page object' do
+        get_story
+        expect(PageObject.find_by(storyblok_story_slug: story['full_slug'])).to have_attributes(
+          storyblok_story_id: story['id'].to_s,
+          storyblok_story_content: story
+        )
+      end
     end
   end
 end

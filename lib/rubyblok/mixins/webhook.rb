@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'active_support/concern'
+require 'rubyblok/mixins/cacheable_storyblok_image'
 
 module Rubyblok
   module Mixins

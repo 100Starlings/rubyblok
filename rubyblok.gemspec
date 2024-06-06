@@ -26,9 +26,9 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency "aws-sdk-s3", "~> 1.151.0"
+  spec.add_dependency 'aws-sdk-s3', '~> 1.151.0'
   spec.add_dependency 'hash_dot', '~> 2.5'
-  spec.add_dependency "httparty", "~> 0.22.0"
+  spec.add_dependency 'httparty', '~> 0.22.0'
   spec.add_dependency 'railties', '~> 7.1'
   spec.add_dependency 'redcarpet', '~> 3.6.0'
   spec.add_dependency 'storyblok', '~> 3.2.0'

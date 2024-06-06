@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rubyblok/mixins/cacheable_storyblok_image'
+
 module StoryblokHelper
   include Rubyblok::Mixins::CacheableStoryblokImage
 
@@ -47,7 +49,7 @@ module StoryblokHelper
     if update_storyblok?
       get_story_via_api(slug, save: true)['content'].to_dot
     else
-      get_story_via_cache(slug).to_dot
+      get_story_via_cache(slug)['content'].to_dot
     end
   end
 

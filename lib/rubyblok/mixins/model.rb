@@ -23,9 +23,9 @@ module Rubyblok
         def find_or_create(story)
           return if story.blank?
 
-          find_or_initialize_by(storyblok_story_id: story["id"]).tap do |page_object|
+          find_or_initialize_by(storyblok_story_id: story['id']).tap do |page_object|
             page_object.storyblok_story_content = story
-            page_object.storyblok_story_slug = story["full_slug"]
+            page_object.storyblok_story_slug = story['full_slug']
             page_object.save
           end
         end
