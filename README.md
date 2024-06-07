@@ -112,6 +112,22 @@ This will start a proxy server.
 
 By doing this initial setup, you are able to see your first Storyblok page inside your app and edit its content in the Storyblok admin interface 🎉
 
+### Rubyblok workflows
+
+#### Non-cached mode (default)
+Rubyblok fetches the content via the Storyblok API and the content is not cached locally.
+
+#### Cached mode
+Rubyblok fetches the content from the local database. This mode is useful ie. if you don't want to call the API on every page request or you want to index the content locally. To enable this mode you need to set the STORYBLOK_CACHED environment variable:
+```
+STORYBLOK_CACHED=true
+```
+
+If you want to update the local cache on every page request (ie. the content is not updated via the webhook), you need to set the STORYBLOK_AUTOUPDATE environment variable:
+```
+STORYBLOK_AUTOUPDATE=true
+```
+
 ### Storyblok webhook
 The Storyblok webhook will be responsible for updating and deleting content in the local database in case of changes. [Learn more here.](https://www.storyblok.com/docs/guide/in-depth/webhooks)
 
