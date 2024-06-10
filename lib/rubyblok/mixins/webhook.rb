@@ -14,6 +14,7 @@ module Rubyblok
           payload = JSON.parse(request.raw_post)
 
           storyblok_story = Rubyblok::Services::GetStoryblokStory.call(slug: payload['story_id'])
+          storyblok_story = Rubyblok::Services::ReplaceStoryblokUrl.call(story: storyblok_story)
           model.find_or_create(storyblok_story)
 
           render(json: { success: true })
