@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-require 'rubyblok/mixins/cacheable_storyblok_image'
-
 module StoryblokHelper
-  include Rubyblok::Mixins::CacheableStoryblokImage
-
   def rubyblok_content_tag(content)
     return if content.blank?
 
@@ -56,17 +52,21 @@ module StoryblokHelper
   private
 
   def get_story_via_api(slug, save: false)
-    storyblok_story = Rubyblok::Services::GetStoryblokStory.call(slug:)
-    storyblok_story = with_cached_images(storyblok_story) if use_cdn_images?
-    model_class.find_or_create(storyblok_story) if save
-    storyblok_story
+    story = Rubyblok::Services::GetStoryblokStory.call(slug:)
+    replace_storyblok_url(story).tap do |storyblok_story|
+      model.find_or_create(storyblok_story) if save
+    end
   end
 
   def get_story_via_cache(slug)
-    model_class.fetch_content(slug)
+    model.fetch_content(slug)
   end
 
-  def model_class
+  def replace_storyblok_url(story)
+    Rubyblok::Services::ReplaceStoryblokUrl.call(story:)
+  end
+
+  def model
     Rubyblok.configuration.model_name.classify.constantize
   end
 
@@ -101,10 +101,6 @@ module StoryblokHelper
 
   def render_inline_partial(template:, locals:)
     ApplicationController.render inline: template, locals:
-  end
-
-  def use_cdn_images?
-    Rubyblok.configuration.cdn_images
   end
 
   def cached?

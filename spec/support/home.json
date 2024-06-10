@@ -15,7 +15,20 @@
       },
       {
         "_uid":"a32246a4-cfce-4017-91a4-f80279d5b103",
-        "image":"https://a.storyblok.com/f/285029/716x416/dd99b2d9ae/duck.jpg",
+        "image": {
+          "id":14127753,
+          "alt":"",
+          "name":"",
+          "focus":"",
+          "title":"",
+          "source":"",
+          "filename":"https://a.storyblok.com/f/236225/798x465/62c0bc474f/rubyblokxyodel.jpg",
+          "copyright":"",
+          "fieldtype":"asset",
+          "meta_data":{},
+          "is_private":"",
+          "is_external_url":false
+        },
         "component":"image",
         "_editable":"\u003c!--#storyblok#{\"name\": \"image\", \"space\": \"285029\", \"uid\": \"a32246a4-cfce-4017-91a4-f80279d5b103\", \"id\": \"479009887\"}--\u003e"
       }

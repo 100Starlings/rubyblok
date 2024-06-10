@@ -16,12 +16,22 @@ module DatabaseConfig
         t.timestamps
       end
     end
+
+    ActiveRecord::Schema.define do
+      create_table :storyblok_images do |t|
+        t.string  :original_image_url
+        t.string  :image
+
+        t.timestamps
+      end
+    end
   end
 
   def truncate_database
     ActiveRecord::Base.connection.execute(
       <<-SQL.squish
         DELETE FROM page_objects;
+        DELETE FROM storyblok_images;
       SQL
     )
   end
