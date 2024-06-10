@@ -17,6 +17,7 @@ require_relative 'generators/rubyblok/install_generator'
 require_relative 'generators/rubyblok/webhook_controller_generator'
 require_relative 'generators/rubyblok/hello_world_generator'
 require_relative 'generators/rubyblok/sitemap_config_generator'
+require_relative 'generators/rubyblok/image_cache_generator'
 
 module Rubyblok
   def self.configuration

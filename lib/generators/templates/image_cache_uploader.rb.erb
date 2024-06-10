@@ -1,0 +1,12 @@
+class <%= class_name %>Uploader < CarrierWave::Uploader::Base
+  storage :fog
+
+  def store_dir
+    model_name = model.model_name.singular
+    "uploads/#{model_name}/#{mounted_as}/#{model.id}"
+  end
+
+  def extension_allowlist
+    %w[gif jpeg jpg png svg mp4]
+  end
+end
