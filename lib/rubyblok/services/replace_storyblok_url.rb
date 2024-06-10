@@ -25,6 +25,8 @@ module Rubyblok
 
       private
 
+      # It finds image fields based on their "fieldtype"=>"asset" attribute.
+      # Please note that it caches only images added as an 'Asset' field type in Storyblok.
       def find_image_fields(content)
         return [content] if image_field?(content)
 

@@ -22,7 +22,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  ActiveRecord::Base.logger = Logger.new("#{File.dirname(__FILE__)}/../debug.log")
+  ActiveRecord::Base.logger = Logger.new("#{File.dirname(__FILE__)}/test.log")
 
   init_database
 
