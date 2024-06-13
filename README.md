@@ -34,27 +34,13 @@ Create a new Space, in _My Spaces > Add Space_. Select the free Community plan b
 
 Get your Storyblok API token in your account, at _Storyblok Space > Settings > Access tokens_ page. Copy the "Preview" access level key.
 
-Add the key to your `STORYBLOK_API_TOKEN` in your env file, like this example:
+Add the API token to your `config/initializers/rubyblok.rb` file:
 
 ```
-STORYBLOK_API_TOKEN=<your API token>
-```
-You will also need to add the variables below to your env file:
-```
-STORYBLOK_VERSION=draft
-STORYBLOK_WEBHOOK_SECRET=''
+config.api_token = <your API token>
 ```
 
 ## Getting Started
-
-### Necessary gems
-You need to add some gems to your app for Rubyblok to work correctly. Run the following commands:
-
-```bash
-bundle add "storyblok"
-bundle add "hash_dot"
-bundle add "dotenv-rails"
-```
 
 ### Hello world - Your first Rubyblok page
 Let's get started with Rubyblok by creating your first page in three steps.
@@ -67,23 +53,23 @@ rails g rubyblok:install
 
 2. Now let's generate and run a migration to create the `pages` table and the `Page` model:
 ```bash
-rails g rubyblok:migration page
+rails g rubyblok:migration PAGE
 
 rails db:migrate
 ```
 
 3. Finally, let's generate your first page:
 ```bash
-rails g rubyblok:hello_world page
+rails g rubyblok:hello_world PAGE
 ```
-This will automatically create a new route, controller, views and styling for your hello world page.
+This will automatically create a new `/pages` route, a `PagesController`, views and styling for your hello world page.
 
-For this example, go to the `rubyblok.rb` file and turn the caching option off:
+For this example, go to the `config/initializers/rubyblok.rb` file and turn the caching option off:
 ```
 config.cached = false
 ```
 
-Now you have created your first Hello World page! Start your Rails server, access the '/pages' route and you will be able to see the page.
+Now you have created your first Hello World page! Start your Rails server, access the `/pages` route and you will be able to see the page.
 
 ### Activate the visual editor 
 Here are the steps to configure the visual editor at Storyblok. This allows you to see a preview of your changes in the Storyblok interface as you edit and save.
@@ -124,7 +110,7 @@ Use this tag to render stories:
 # Slug: full_slug of the storyblok story
 <%= rubyblok_story_tag(slug) %>
 ```
-The name of the storyblok blok should match the rails partial, ie the `header` storyblok blok should have a corresponding `_header.html.erb` partial in the `config.component_path` directory. The partial is called with a `blok` local variable which contains the storyblok blok properties.
+The name of the storyblok block should match the rails partial, ie if the block is named `header`, it should have a corresponding `_header.html.erb` partial in the directory defined in `config.component_path`. The partial is called with a `blok` local variable which contains the storyblok block properties.
 
 ### rubyblok_content_tag
 It renders content of Text, TextArea, Markdown or Richtext storyblok fields.
@@ -162,9 +148,8 @@ Use this tag to render more than one component:
 In case you need to update the caching layer with new content added to Storyblok, run the following command:
 ```
 # Slug: full_slug of the storyblok story
-storyblok_story_content = Rubyblok::Services::GetStoryblokStory.call(slug: slug)
-<MODEL_NAME>.find_or_initialize_by(storyblok_story_slug: page)
-     .update(storyblok_story_content:, storyblok_story_id: storyblok_story_content["id"])
+storyblok_story = Rubyblok::Services::GetStoryblokStory.call(slug: slug)
+<MODEL_NAME>.find_or_create(storyblok_story)
 ```
 
 ## Rubyblok workflows
@@ -173,12 +158,12 @@ storyblok_story_content = Rubyblok::Services::GetStoryblokStory.call(slug: slug)
 Rubyblok fetches the content via the Storyblok API and the content is not cached locally.
 
 ### Cached mode
-Rubyblok fetches the content from the local database. This mode is useful ie. if you don't want to call the API on every page request or you want to index the content locally. To enable this mode you need to set the cached feature on in the rubyblok.rb file:
+Rubyblok fetches the content from the local database. This mode is useful ie. if you don't want to call the API on every page request or you want to index the content locally. To enable this mode you need to set the cached feature on in the `config/initializers/rubyblok.rb` file:
 ```
 config.cached = true
 ```
 
-If you want to update the local cache on every page request (ie. the content is not updated via the webhook), you need to set the auto_update feature on in the rubyblok.rb file:
+If you want to update the local cache on every page request (ie. the content is not updated via the webhook), you need to set the auto_update feature on in the `config/initializers/rubyblok.rb` file:
 ```
 config.auto_update = true
 ```
@@ -188,7 +173,7 @@ The Storyblok webhook will be responsible for updating and deleting content in t
 
 Generate the webhook controller:
 ```bash
-rails g rubyblok:webhook_controller storyblok_webhook
+rails g rubyblok:webhook_controller STORYBLOK_WEBHOOK
 ```
 
 ## Caching storyblok images
@@ -199,19 +184,19 @@ You can store your storyblok images and videos on your own S3 storage by enablin
 rails g rubyblok:image_cache STORYBLOK_IMAGE
 ```
 
-2. Now let's run a migration to create the `storyblok_images` table:
+2. Add the following gems to your Gemfile:
+```
+bundle add 'carrierwave'
+bundle add 'fog-aws'
+
+```
+
+3. Now let's run a migration to create the `storyblok_images` table:
 ```bash
 rails db:migrate
 ```
 
-3. Add the following gems to your Gemfile:
-```
-gem 'carrierwave'
-gem "fog-aws"
-
-```
-
-4. Finally, enable the image cache feature in the rubyblok.rb file:
+4. Finally, enable the image cache feature in the `config/initializers/rubyblok.rb` file:
 ```
 config.use_cdn_images = true
 ```
@@ -220,7 +205,7 @@ Please note that it caches only images added as an `Asset` field type in Storybl
 
 ## Caching views
 
-You can enable fragment caching on rubyblok components by setting the cache_views feature on in the rubyblok.rb file:
+You can enable fragment caching on rubyblok components by setting the cache_views feature on in the `config/initializers/rubyblok.rb` file:
 ```
 config.cache_views = true
 ```
