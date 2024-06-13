@@ -12,8 +12,17 @@ module StoryblokHelper
   end
 
   def rubyblok_story_tag(slug)
-    content = get_story(slug)
-    rubyblok_component_tag(partial: content.component, blok: content)
+    story = get_story(slug)
+    content = story['content'].to_dot
+
+    template = <<-ERB
+      <% cache_key = "rubyblok/#{story['id']}-#{Digest::SHA1.hexdigest(story.to_json)}" %>
+      <% cache_if use_cache, cache_key do %>
+        <%= rubyblok_component_tag(partial: content.component, blok: content) %>
+      <% end %>
+    ERB
+
+    render_inline_partial template:, locals: { content:, use_cache: Rubyblok.configuration.cache_views }
   end
 
   def rubyblok_component_tag(blok:, partial: blok.component)
@@ -39,17 +48,21 @@ module StoryblokHelper
     render_inline_partial template:, locals: { bloks: }
   end
 
-  def get_story(slug)
-    return get_story_via_api(slug)['content'].to_dot unless cached?
-
-    if update_storyblok?
-      get_story_via_api(slug, save: true)['content'].to_dot
-    else
-      get_story_via_cache(slug)['content'].to_dot
-    end
+  def get_story_content(slug)
+    get_story(slug)['content'].to_dot
   end
 
   private
+
+  def get_story(slug)
+    return get_story_via_api(slug) unless cached?
+
+    if update_storyblok?
+      get_story_via_api(slug, save: true)
+    else
+      get_story_via_cache(slug)
+    end
+  end
 
   def get_story_via_api(slug, save: false)
     story = Rubyblok::Services::GetStoryblokStory.call(slug:)

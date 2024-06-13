@@ -234,8 +234,8 @@ RSpec.describe StoryblokHelper do
     end
   end
 
-  describe '#get_story' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    subject(:get_story) { storyblok_helper.get_story(slug) }
+  describe '#get_story_content' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    subject(:get_story) { storyblok_helper.get_story_content(slug) }
 
     let(:slug) { 'Home' }
     let(:story) { JSON.parse(File.read('spec/support/home.json')) }

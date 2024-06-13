@@ -14,11 +14,12 @@ In addition, Rubyblok provides an abstraction layer and stores all your content 
 4.  [Rubyblok workflows](#rubyblok-workflows)
 5.  [Rubyblok webhook](#rubyblok-webhook)
 6.  [Caching storyblok images](#caching-storyblok-images)
-7.  [Sitemap configuration](#sitemap-configuration)
-8.  [How to Run Tests](#how-to-run-tests)
-9.  [Guide for Contributing](#guide-for-contributing)
-10. [How to Contact Us](#how-to-contact-us)
-11. [License](#license)
+7.  [Caching views](#caching-views)
+8.  [Sitemap configuration](#sitemap-configuration)
+9.  [How to Run Tests](#how-to-run-tests)
+10.  [Guide for Contributing](#guide-for-contributing)
+11. [How to Contact Us](#how-to-contact-us)
+12. [License](#license)
 
 ## Installation
 Rubyblok 1.0 works with Rails 6.0 onwards. Run:
@@ -216,6 +217,14 @@ config.use_cdn_images = true
 ```
 
 Please note that it caches only images added as an `Asset` field type in Storyblok.
+
+## Caching views
+
+You can enable fragment caching on rubyblok components by setting the cache_views feature on in the rubyblok.rb file:
+```
+config.cache_views = true
+```
+Please note that if any of the component partials changes you need to clear the cache.
 
 ## Sitemap configuration
 You can generate a sitemap configuration for your website with the following command:
