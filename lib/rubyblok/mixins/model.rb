@@ -19,6 +19,16 @@ module Rubyblok
         def fetch_content(slug)
           find_by(storyblok_story_slug: slug)&.storyblok_story_content
         end
+
+        def find_or_create(story)
+          return if story.blank?
+
+          find_or_initialize_by(storyblok_story_id: story['id']).tap do |model|
+            model.storyblok_story_content = story
+            model.storyblok_story_slug = story['full_slug']
+            model.save
+          end
+        end
       end
     end
   end

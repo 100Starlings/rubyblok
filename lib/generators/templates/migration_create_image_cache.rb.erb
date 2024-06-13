@@ -1,0 +1,12 @@
+class Create<%= class_name.pluralize %> < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :<%= table_name %> do |t|
+      t.string  :original_image_url
+      t.string  :image
+
+      t.timestamps
+    end
+
+    add_index :<%= table_name %>, :original_image_url, unique: true
+  end
+end

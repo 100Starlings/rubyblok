@@ -8,14 +8,17 @@ This integration allows you to edit your content online, preview it in real-time
 In addition, Rubyblok provides an abstraction layer and stores all your content locally, reducing data usage and enhancing performance. This enables new functionalities that leverage the local data, such as global content search, sitemaps, and listings. Ultimately, this setup increases resilience by eliminating dependency on external data sources.
 
 ## Table of Contents
-1. [Installation](#installation)
-2. [Getting Started](#getting-started)
-3. [Rubyblok tags](#rubyblok-tags)
-4. [Sitemap configuration](#sitemap-configuration)
-5. [How to Run Tests](#how-to-run-tests)
-6. [Guide for Contributing](#guide-for-contributing)
-7. [How to Contact Us](#how-to-contact-us)
-8. [License](#license)
+1.  [Installation](#installation)
+2.  [Getting Started](#getting-started)
+3.  [Rubyblok tags](#rubyblok-tags)
+4.  [Rubyblok workflows](#rubyblok-workflows)
+5.  [Rubyblok webhook](#rubyblok-webhook)
+6.  [Caching storyblok images](#caching-storyblok-images)
+7.  [Sitemap configuration](#sitemap-configuration)
+8.  [How to Run Tests](#how-to-run-tests)
+9.  [Guide for Contributing](#guide-for-contributing)
+10. [How to Contact Us](#how-to-contact-us)
+11. [License](#license)
 
 ## Installation
 Rubyblok 1.0 works with Rails 6.0 onwards. Run:
@@ -112,14 +115,6 @@ This will start a proxy server.
 
 By doing this initial setup, you are able to see your first Storyblok page inside your app and edit its content in the Storyblok admin interface 🎉
 
-### Storyblok webhook
-The Storyblok webhook will be responsible for updating and deleting content in the local database in case of changes. [Learn more here.](https://www.storyblok.com/docs/guide/in-depth/webhooks)
-
-Generate the webhook controller:
-```bash
-rails g rubyblok:webhook_controller storyblok_webhook
-```
-
 ## Rubyblok tags
 
 ### rubyblok_story_tag
@@ -170,6 +165,57 @@ storyblok_story_content = Rubyblok::Services::GetStoryblokStory.call(slug: slug)
 <MODEL_NAME>.find_or_initialize_by(storyblok_story_slug: page)
      .update(storyblok_story_content:, storyblok_story_id: storyblok_story_content["id"])
 ```
+
+## Rubyblok workflows
+
+### Non-cached mode (default)
+Rubyblok fetches the content via the Storyblok API and the content is not cached locally.
+
+### Cached mode
+Rubyblok fetches the content from the local database. This mode is useful ie. if you don't want to call the API on every page request or you want to index the content locally. To enable this mode you need to set the cached feature on in the rubyblok.rb file:
+```
+config.cached = true
+```
+
+If you want to update the local cache on every page request (ie. the content is not updated via the webhook), you need to set the auto_update feature on in the rubyblok.rb file:
+```
+config.auto_update = true
+```
+
+## Storyblok webhook
+The Storyblok webhook will be responsible for updating and deleting content in the local database in case of changes. [Learn more here.](https://www.storyblok.com/docs/guide/in-depth/webhooks)
+
+Generate the webhook controller:
+```bash
+rails g rubyblok:webhook_controller storyblok_webhook
+```
+
+## Caching storyblok images
+You can store your storyblok images and videos on your own S3 storage by enabling this rubyblok feature.
+
+1. First, you need to run the image cache generator, which will create the model file, the uploader file and the carrierwave config file for you:
+```bash
+rails g rubyblok:image_cache STORYBLOK_IMAGE
+```
+
+2. Now let's run a migration to create the `storyblok_images` table:
+```bash
+rails db:migrate
+```
+
+3. Add the following gems to your Gemfile:
+```
+gem 'carrierwave'
+gem "fog-aws"
+
+```
+
+4. Finally, enable the image cache feature in the rubyblok.rb file:
+```
+config.use_cdn_images = true
+```
+
+Please note that it caches only images added as an `Asset` field type in Storyblok.
 
 ## Sitemap configuration
 You can generate a sitemap configuration for your website with the following command:

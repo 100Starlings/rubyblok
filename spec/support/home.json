@@ -1,0 +1,55 @@
+{
+  "name":"Home",
+  "created_at":"2024-04-16T15:18:11.011Z",
+  "published_at":null,
+  "id":479009887,
+  "uuid":"8cb35d13-66f3-4d85-b47d-60a9ec7cec0f",
+  "content":{
+    "_uid":"827a931c-dc9a-425d-a8a8-f51f36fb0d4c",
+    "body":[
+      {
+        "_uid":"8ce0dcda-8131-4aeb-9421-3b62ab9f66c5",
+        "headline":"Hello world!",
+        "component":"teaser",
+        "_editable":"\u003c!--#storyblok#{\"name\": \"teaser\", \"space\": \"285029\", \"uid\": \"8ce0dcda-8131-4aeb-9421-3b62ab9f66c5\", \"id\": \"479009887\"}--\u003e"
+      },
+      {
+        "_uid":"a32246a4-cfce-4017-91a4-f80279d5b103",
+        "image": {
+          "id":14127753,
+          "alt":"",
+          "name":"",
+          "focus":"",
+          "title":"",
+          "source":"",
+          "filename":"https://a.storyblok.com/f/236225/798x465/62c0bc474f/rubyblokxyodel.jpg",
+          "copyright":"",
+          "fieldtype":"asset",
+          "meta_data":{},
+          "is_private":"",
+          "is_external_url":false
+        },
+        "component":"image",
+        "_editable":"\u003c!--#storyblok#{\"name\": \"image\", \"space\": \"285029\", \"uid\": \"a32246a4-cfce-4017-91a4-f80279d5b103\", \"id\": \"479009887\"}--\u003e"
+      }
+    ],
+    "component":"page",
+    "_editable":"\u003c!--#storyblok#{\"name\": \"page\", \"space\": \"285029\", \"uid\": \"827a931c-dc9a-425d-a8a8-f51f36fb0d4c\", \"id\": \"479009887\"}--\u003e"
+  },
+  "slug":"home",
+  "full_slug":"home",
+  "sort_by_date":null,
+  "position":0,
+  "tag_list":[],
+  "is_startpage":false,
+  "parent_id":0,
+  "meta_data":null,
+  "group_id":"daa50085-b204-417f-a88f-b7e27d07c659",
+  "first_published_at":null,
+  "release_id":null,
+  "lang":"default",
+  "path":null,
+  "alternates":[],
+  "default_full_slug":null,
+  "translated_slugs":null
+}

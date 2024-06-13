@@ -4,7 +4,9 @@ Rubyblok.configure do |config|
   config.api_token = ENV.fetch('STORYBLOK_API_TOKEN', nil)
   config.auto_update = ActiveModel::Type::Boolean.new.cast(ENV.fetch('STORYBLOK_AUTOUPDATE', nil))
   config.cached = ActiveModel::Type::Boolean.new.cast(ENV.fetch('STORYBLOK_CACHED', nil))
+  config.use_cdn_images = ActiveModel::Type::Boolean.new.cast(ENV.fetch('STORYBLOK_CDN_IMAGES', nil))
   config.component_path = 'shared/storyblok'
+  config.image_model_name = ''
   config.model_name = ''
   config.version = ENV.fetch('STORYBLOK_VERSION', nil)
   config.webhook_secret = ENV.fetch('STORYBLOK_WEBHOOK_SECRET', nil)

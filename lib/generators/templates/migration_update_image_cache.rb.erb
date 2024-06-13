@@ -1,0 +1,8 @@
+class Update<%= class_name.pluralize %> < ActiveRecord::Migration<%= migration_version %>
+  def change
+    add_column :<%= table_name %>, :original_image_url, :string
+    add_column :<%= table_name %>, :image, :string
+
+    add_index :<%= table_name %>, :storyblok_story_slug, unique: true
+  end
+end
