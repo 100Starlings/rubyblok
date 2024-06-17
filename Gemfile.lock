@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubyblok (1.1.0)
+    rubyblok (1.2.0)
       hash_dot (~> 2.5)
       railties (~> 7.1)
       redcarpet (~> 3.6.0)
