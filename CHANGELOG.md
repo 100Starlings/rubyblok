@@ -5,8 +5,8 @@ All notable changes to this project will be documented in this file.
 ## [1.2.0] - 2024-06-17
 
 ### Added
-- Caching storyblok images on S3
-- Fragment caching of rubyblok components
+- Caching Storyblok images on S3
+- Fragment caching of Rubyblok components
 
 ## [1.1.0] - 2024-05-02
 
