@@ -171,9 +171,14 @@ config.auto_update = true
 ## Storyblok webhook
 The Storyblok webhook will be responsible for updating and deleting content in the local database in case of changes. [Learn more here.](https://www.storyblok.com/docs/guide/in-depth/webhooks)
 
-Generate the webhook controller:
+1. First generate the webhook controller:
 ```bash
 rails g rubyblok:webhook_controller STORYBLOK_WEBHOOK
+```
+
+2. You need to set the webhook secret used in Storyblok in the `config/initializers/rubyblok.rb` file:
+```
+config.webhook_secret = 'secret'
 ```
 
 ## Caching storyblok images
