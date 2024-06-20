@@ -71,7 +71,7 @@ config.cached = false
 
 Now you have created your first Hello World page! Start your Rails server, access the `/pages` route and you will be able to see the page.
 
-### Activate the visual editor 
+### Activate the visual editor
 Here are the steps to configure the visual editor at Storyblok. This allows you to see a preview of your changes in the Storyblok interface as you edit and save.
 
 At Storyblok, select your Space and go to _Settings > Visual Editor_. 
@@ -138,11 +138,15 @@ text = {
 # Output: "<p>this is a richtext</p>"
 ```
 
+You can prevent rendering content on production by adding a boolean field type with the name "invisible_on_production" to your Storyblok block.
+
 ### rubyblok_blocks_tag
 Use this tag to render more than one component:
 ```
 <%= rubyblok_blocks_tag(blok.bloks) %>
 ```
+
+You can prevent rendering content on production by adding a boolean field type with the name "invisible_on_production" to your Storyblok block.
 
 ### Updating content manually at the caching layer
 In case you need to update the caching layer with new content added to Storyblok, run the following command:

@@ -25,6 +25,8 @@ RSpec.describe StoryblokHelper do
       cached:,
       auto_update:
     )
+
+    allow(Rails).to(receive(:env).and_return(instance_double('ActiveSupport::EnvironmentInquirer', production?: false)))
   end
 
   describe '#rubyblok_content_tag' do
@@ -124,6 +126,83 @@ RSpec.describe StoryblokHelper do
         result = storyblok_helper.rubyblok_component_tag(blok: component_object)
 
         expect(result.squish).to eq('<head> homepage </head>')
+      end
+    end
+
+    context 'when Rails.env is production' do
+      before do
+        allow(Rails).to(receive(:env)
+                    .and_return(instance_double('ActiveSupport::EnvironmentInquirer', production?: true)))
+      end
+
+      context 'when invisible_on_production is true' do
+        let(:component_object) do
+          { 'component' => 'button', 'title' => 'OK', 'invisible_on_production' => true }.to_dot
+        end
+
+        it 'does not render the component tag' do
+          result = storyblok_helper.rubyblok_component_tag(blok: component_object)
+
+          expect(result).to(be_nil)
+        end
+      end
+
+      context 'when invisible_on_production is false' do
+        let(:component_object) do
+          { 'component' => 'button', 'title' => 'OK', 'invisible_on_production' => false }.to_dot
+        end
+
+        it 'renders the component tag' do
+          result = storyblok_helper.rubyblok_component_tag(blok: component_object)
+
+          expect(result.squish).to(eq('<a> OK </a>'))
+        end
+      end
+
+      context 'when invisible_on_production is not present' do
+        let(:component_object) { { 'component' => 'button', 'title' => 'OK' }.to_dot }
+
+        it 'renders the component tag' do
+          result = storyblok_helper.rubyblok_component_tag(blok: component_object)
+
+          expect(result.squish).to(eq('<a> OK </a>'))
+        end
+      end
+    end
+
+    context 'when Rails.env is not production' do
+      context 'when invisible_on_production is true' do
+        let(:component_object) do
+          { 'component' => 'button', 'title' => 'OK', 'invisible_on_production' => true }.to_dot
+        end
+
+        it 'does not render the component tag' do
+          result = storyblok_helper.rubyblok_component_tag(blok: component_object)
+
+          expect(result.squish).to(eq('<a> OK </a>'))
+        end
+      end
+
+      context 'when invisible_on_production is false' do
+        let(:component_object) do
+          { 'component' => 'button', 'title' => 'OK', 'invisible_on_production' => false }.to_dot
+        end
+
+        it 'renders the component tag' do
+          result = storyblok_helper.rubyblok_component_tag(blok: component_object)
+
+          expect(result.squish).to(eq('<a> OK </a>'))
+        end
+      end
+
+      context 'when invisible_on_production is not present' do
+        let(:component_object) { { 'component' => 'button', 'title' => 'OK' }.to_dot }
+
+        it 'renders the component tag' do
+          result = storyblok_helper.rubyblok_component_tag(blok: component_object)
+
+          expect(result.squish).to(eq('<a> OK </a>'))
+        end
       end
     end
   end
