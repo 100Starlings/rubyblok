@@ -7,5 +7,9 @@ module Rubyblok
     initializer 'rubyblok.storyblok_helper' do
       ActiveSupport.on_load(:action_view) { include StoryblokHelper }
     end
+
+    rake_tasks do
+      load 'tasks/rubyblok/create_or_update_content.rake'
+    end
   end
 end

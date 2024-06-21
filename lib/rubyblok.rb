@@ -7,7 +7,7 @@ require 'hash_dot'
 require_relative 'rubyblok/helpers/storyblok_helper'
 require_relative 'rubyblok/version'
 require_relative 'rubyblok/configuration'
-require_relative 'rubyblok/railtie' if defined?(Rails)
+require_relative 'rubyblok/railtie' if defined?(Rails::Railtie)
 require_relative 'rubyblok/services/get_storyblok_story'
 require_relative 'rubyblok/services/replace_storyblok_url'
 require_relative 'rubyblok/mixins/model'
@@ -29,5 +29,4 @@ module Rubyblok
   end
 
   class Error < StandardError; end
-  # Your code goes here...
 end
