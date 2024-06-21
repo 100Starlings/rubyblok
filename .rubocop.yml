@@ -10,3 +10,5 @@ Documentation:
   Enabled: false
 Layout/LineLength:
   Max: 120
+RSpec/NestedGroups:
+  Enabled: false

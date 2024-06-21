@@ -26,7 +26,7 @@ RSpec.describe StoryblokHelper do
       auto_update:
     )
 
-    allow(Rails).to(receive(:env).and_return(instance_double('ActiveSupport::EnvironmentInquirer', production?: false)))
+    allow(Rails).to(receive(:env).and_return(instance_double(ActiveSupport::EnvironmentInquirer, production?: false)))
   end
 
   describe '#rubyblok_content_tag' do
@@ -132,7 +132,7 @@ RSpec.describe StoryblokHelper do
     context 'when Rails.env is production' do
       before do
         allow(Rails).to(receive(:env)
-                    .and_return(instance_double('ActiveSupport::EnvironmentInquirer', production?: true)))
+                    .and_return(instance_double(ActiveSupport::EnvironmentInquirer, production?: true)))
       end
 
       context 'when invisible_on_production is true' do

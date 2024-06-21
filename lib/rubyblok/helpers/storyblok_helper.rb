@@ -32,7 +32,7 @@ module StoryblokHelper
   end
 
   def invisible_on_production?(blok)
-    Rails.env.production? && blok.fetch("invisible_on_production", false)
+    Rails.env.production? && blok.fetch('invisible_on_production', false)
   end
 
   # rubocop:disable Rails/OutputSafety

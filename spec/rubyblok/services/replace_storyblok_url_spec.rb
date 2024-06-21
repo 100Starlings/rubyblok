@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe Rubyblok::Services::ReplaceStoryblokUrl do
-  # rubocop:disable RSpec/NestedGroups
   describe '.call' do
     subject(:replace_url) { described_class.call(story:) }
 
