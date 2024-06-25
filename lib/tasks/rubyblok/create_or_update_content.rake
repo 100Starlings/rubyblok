@@ -2,7 +2,7 @@
 
 PER_PAGE = 50
 
-namespace :rubyblok do
+namespace :rubyblok do # rubocop:disable Metrics/BlockLength
   desc 'Create or update cached Storyblok stories'
   task :create_or_update_content, [:version] => [:environment] do |_task, args|
     args.with_defaults(version: Rubyblok.configuration.version)
