@@ -58,7 +58,6 @@ RSpec.describe 'Webhook' do
       end
     end
 
-    # rubocop:disable RSpec/NestedGroups
     context 'when the webhook is secured' do # rubocop:disable RSpec/MultipleMemoizedHelpers
       let(:action) { 'published' }
       let(:webhook_secret) { 'secret' }

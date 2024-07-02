@@ -26,7 +26,13 @@ module StoryblokHelper
   end
 
   def rubyblok_component_tag(blok:, partial: blok.component)
+    return if invisible_on_production?(blok)
+
     render_partial(partial:, locals: { blok: }).prepend(rubyblok_editable_tag(blok).to_s)
+  end
+
+  def invisible_on_production?(blok)
+    Rails.env.production? && blok.fetch('invisible_on_production', false)
   end
 
   # rubocop:disable Rails/OutputSafety
