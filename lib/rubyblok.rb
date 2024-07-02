@@ -11,6 +11,7 @@ require_relative 'rubyblok/railtie' if defined?(Rails::Railtie)
 require_relative 'rubyblok/services/get_storyblok_story'
 require_relative 'rubyblok/services/replace_storyblok_url'
 require_relative 'rubyblok/mixins/model'
+require_relative 'rubyblok/mixins/model_cache_class'
 require_relative 'rubyblok/mixins/webhook'
 require_relative 'generators/rubyblok/migration_generator'
 require_relative 'generators/rubyblok/install_generator'

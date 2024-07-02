@@ -6,6 +6,7 @@ module Rubyblok
   module Mixins
     module Webhook
       extend ActiveSupport::Concern
+      include Rubyblok::Mixins::ModelCacheClass
 
       included do # rubocop:disable Metrics/BlockLength
         skip_before_action :verify_authenticity_token, only: [:create]
@@ -18,7 +19,7 @@ module Rubyblok
           when 'published'
             update_story(payload)
           when 'unpublished', 'deleted'
-            model.find_by(storyblok_story_id: payload['story_id'])&.destroy!
+            model_cache_class.find_by(storyblok_story_id: payload['story_id'])&.destroy!
           end
 
           render(json: { success: true })
@@ -26,14 +27,10 @@ module Rubyblok
 
         private
 
-        def model
-          Rubyblok.configuration.model_name.classify.constantize
-        end
-
         def update_story(payload)
           storyblok_story = Rubyblok::Services::GetStoryblokStory.call(slug: payload['story_id'])
           storyblok_story = Rubyblok::Services::ReplaceStoryblokUrl.call(story: storyblok_story)
-          model.find_or_create(storyblok_story)
+          model_cache_class.find_or_create(storyblok_story)
         end
 
         def verify_signature(payload_body)
