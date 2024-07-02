@@ -5,6 +5,8 @@ PER_PAGE = 50
 namespace :rubyblok do
   desc 'Create or update cached Storyblok stories'
   task :create_or_update_content, [:version] => [:environment] do |_task, args|
+    include Rubyblok::Mixins::ModelCacheClass
+
     args.with_defaults(version: Rubyblok.configuration.version)
 
     raise ArgumentError, "Invalid version \"#{args[:version]}\"" unless %w[draft published].include?(args[:version])
@@ -16,7 +18,7 @@ namespace :rubyblok do
       stories = get_stories(client:, page:)
       break if stories.empty?
 
-      stories.each { |story| model_class.find_or_create(story) }
+      stories.each { |story| model_cache_class.find_or_create(story) }
 
       page += 1
 
@@ -30,9 +32,5 @@ namespace :rubyblok do
 
   def get_stories(client:, page:)
     client.stories(page:, per_page: PER_PAGE).dig('data', 'stories')
-  end
-
-  def model_class
-    Rubyblok.configuration.model_name.classify.constantize
   end
 end

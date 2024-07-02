@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require 'rubyblok/mixins/model_cache_class'
+
 module StoryblokHelper
+  include Rubyblok::Mixins::ModelCacheClass
+
   def rubyblok_content_tag(content)
     return if content.blank?
 
@@ -73,20 +77,16 @@ module StoryblokHelper
   def get_story_via_api(slug, save: false)
     story = Rubyblok::Services::GetStoryblokStory.call(slug:)
     replace_storyblok_url(story).tap do |storyblok_story|
-      model.find_or_create(storyblok_story) if save
+      model_cache_class.find_or_create(storyblok_story) if save
     end
   end
 
   def get_story_via_cache(slug)
-    model.fetch_content(slug)
+    model_cache_class.fetch_content(slug)
   end
 
   def replace_storyblok_url(story)
     Rubyblok::Services::ReplaceStoryblokUrl.call(story:)
-  end
-
-  def model
-    Rubyblok.configuration.model_name.classify.constantize
   end
 
   def rich_text_renderer
