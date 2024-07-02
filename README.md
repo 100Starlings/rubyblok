@@ -168,6 +168,18 @@ If you want to update the local cache on every page request (ie. the content is 
 config.auto_update = true
 ```
 
+You can also use the rake task `rubyblok:create_or_update_content` to update the local cache:
+
+```bash
+rails rubyblok:create_or_update_content # Using the version configured on `Rubyblok.configuration.version`.
+```
+
+or with the `version` argument (`draft` or `published`):
+
+```bash
+rails rubyblok:create_or_update_content[published]
+```
+
 ## Storyblok webhook
 The Storyblok webhook will be responsible for updating and deleting content in the local database in case of changes. [Learn more here.](https://www.storyblok.com/docs/guide/in-depth/webhooks)
 
