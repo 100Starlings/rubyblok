@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2024-07-04
+
+### Added
+- Securing webhook with secret token
+- Visibility property on components
+- Rake task to download all content
+
 ## [1.2.0] - 2024-06-17
 
 ### Added
